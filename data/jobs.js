@@ -2,7 +2,7 @@ const jobs = [
 
 {
 id:1,
-title:"Feuerwehr",
+title:"Einsatzkraft bei der Feuerwehr",
 image:"images/fire_station.jpg",
 categories:["action","teamwork","outdoor"],
 description:"Unterstütze die Feuerwehr bei Vorbereitung, Ordnung und kleinen Aufgaben.",
@@ -28,7 +28,7 @@ tasks:[
 
 {
 id:3,
-title:"Mitarbeit im Dönerladen",
+title:"Servicekraft im Dönerladen",
 image:"images/doner.jpg",
 categories:["food","service","people"],
 description:"Unterstütze das Team im Imbiss oder Dönerladen.",
@@ -54,7 +54,7 @@ tasks:[
 
 {
 id:5,
-title:"Kita-Helfer*in",
+title:"Kinderbetreuung",
 image:"images/kita.jpg",
 categories:["children","people","creative"],
 description:"Hilf Kindern beim Spielen und Basteln.",
@@ -67,7 +67,7 @@ tasks:[
 
 {
 id:6,
-title:"Bauernhof",
+title:"Unterstützung auf dem Bauernhof",
 image:"images/farm.jpg",
 categories:["nature","animals","outdoor"],
 description:"Hilf auf dem Bauernhof bei alltäglichen Arbeiten mit Tieren und Natur.",
@@ -80,7 +80,7 @@ tasks:[
 
 {
 id:7,
-title:"Tiere füttern",
+title:"Tierpflegekraft",
 image:"images/feeding_animals.jpg",
 categories:["animals","care","outdoor"],
 description:"Unterstütze bei der Versorgung und Fütterung von Tieren.",
@@ -93,7 +93,7 @@ tasks:[
 
 {
 id:8,
-title:"Obst ernten",
+title:"Erntehilfe auf einem Obsthof",
 image:"images/fruit_harvest.jpg",
 categories:["nature","outdoor","food"],
 description:"Hilf bei der Ernte von Obst und saisonalen Früchten.",
@@ -106,7 +106,7 @@ tasks:[
 
 {
 id:9,
-title:"Hilfe in der Bibliothek",
+title:"Servicekraft in der Bibliothek",
 image:"images/library.jpg",
 categories:["quiet","service","organization"],
 description:"Unterstütze in der Bibliothek bei Ordnung und Organisation.",
@@ -119,7 +119,7 @@ tasks:[
 
 {
 id:10,
-title:"Fahrradladen",
+title:"Servicekraft im Fahrradladen",
 image:"images/bike_shop.jpg",
 categories:["service","technical","people"],
 description:"Hilf im Fahrradladen bei einfachen Aufgaben rund um Fahrräder.",
@@ -132,7 +132,7 @@ tasks:[
 
 {
 id:11,
-title:"Hotel",
+title:"Servicekraft im Hotel",
 image:"images/hotel.jpg",
 categories:["service","people","organization"],
 description:"Unterstütze im Hotel bei täglichen Abläufen und Gästebetreuung.",
@@ -145,7 +145,7 @@ tasks:[
 
 {
 id:12,
-title:"Zahnarztpraxis",
+title:"Assistenz in der Zahnarztpraxis",
 image:"images/dentist.jpg",
 categories:["health","service","people"],
 description:"Hilf in einer Zahnarztpraxis bei organisatorischen Aufgaben.",
@@ -158,7 +158,7 @@ tasks:[
 
 {
 id:13,
-title:"Apotheke",
+title:"Assistenz in der Apotheke",
 image:"images/pharmacy.jpg",
 categories:["health","service","organization"],
 description:"Unterstütze in der Apotheke bei Ordnung und Kundenservice.",
@@ -171,7 +171,7 @@ tasks:[
 
 {
 id:14,
-title:"Radiosender",
+title:"Redaktionsassistenz beim Radiosender",
 image:"images/radio_station.jpg",
 categories:["media","creative","communication"],
 description:"Einblick in die Arbeit eines Radiosenders und Medienproduktion.",
@@ -184,7 +184,7 @@ tasks:[
 
 {
 id:15,
-title:"Miniaturmuseum",
+title:"Gästebetreuung in der Miniaturmuseum",
 image:"images/miniature_museum.jpg",
 categories:["culture","museum","organization"],
 description:"Hilf im Museum bei Ausstellung und Besucherbetreuung.",
@@ -197,7 +197,7 @@ tasks:[
 
 {
 id:16,
-title:"Karting Arena",
+title:"Gästebetreuung in der Karting-Arena",
 image:"images/karting.jpg",
 categories:["sport","action","outdoor"],
 description:"Unterstütze in einer Karting-Arena bei Organisation und Ablauf.",
@@ -212,7 +212,7 @@ tasks:[
 
 {
 id:17,
-title:"Seniorenheim",
+title:"Pflegefachkraft",
 image:"images/senior_home.jpg",
 categories:["care","people","service"],
 description:"Unterstütze ältere Menschen im Alltag im Seniorenheim.",
@@ -238,7 +238,7 @@ tasks:[
 
 {
 id:19,
-title:"Medien & Social Media",
+title:"Social-Media-Assistenz",
 image:"images/social_media.jpg",
 categories:["media","creative","communication"],
 description:"Unterstütze bei Social-Media-Content und Medienarbeit.",
@@ -264,7 +264,7 @@ tasks:[
 
 {
 id:21,
-title:"Lager & Logistik",
+title:"Fachkraft für Lagerlogistik",
 image:"images/warehouse.jpg",
 categories:["logistics","physical","organization"],
 description:"Unterstütze im Lager bei Sortierung und Versand.",
@@ -277,7 +277,7 @@ tasks:[
 
 {
 id:22,
-title:"Verkauf am Stand",
+title:"Verkaufskraft am Stand",
 image:"images/market_stand.jpg",
 categories:["sales","people","service"],
 description:"Arbeite an einem Verkaufsstand auf Märkten oder Events.",
@@ -290,7 +290,7 @@ tasks:[
 
 {
 id:23,
-title:"Verkauf im Laden",
+title:"Verkaufskraft im Laden",
 image:"images/shop.jpg",
 categories:["sales","service","people"],
 description:"Hilf im Einzelhandel bei Verkauf und Organisation.",
@@ -303,7 +303,7 @@ tasks:[
 
 {
 id:24,
-title:"Putzen",
+title:"Reinigungskraft",
 image:"images/cleaning.jpg",
 categories:["cleaning","service","physical"],
 description:"Unterstütze bei Reinigungsarbeiten in verschiedenen Bereichen.",
@@ -316,7 +316,7 @@ tasks:[
 
 {
 id:25,
-title:"Hochseilgarten",
+title:"Hochseilgarten-Betreuung",
 image:"images/climbing_park.jpg",
 categories:["sport","outdoor","action"],
 description:"Hilf im Kletterpark bei Betreuung und Sicherheit.",
@@ -329,7 +329,7 @@ tasks:[
 /*
 {
 id:26,
-title:"Arbeiten mit Lebensmitteln",
+title:"Küchenhilfe",
 image:"images/food_work.jpg",
 categories:["food","service","hygiene"],
 description:"Unterstütze bei der Verarbeitung und Vorbereitung von Lebensmitteln.",
@@ -344,7 +344,7 @@ tasks:[
 /*
 {
 id:27,
-title:"Freizeitpark-Hilfe",
+title:"Gästebetreuung im Freizeitpark",
 image:"images/amusement_park.jpg",
 categories:["fun","service","people"],
 description:"Hilf im Freizeitpark bei Betreuung und Organisation.",
@@ -357,7 +357,7 @@ tasks:[
 
 {
 id:28,
-title:"Sportverein",
+title:"Trainingsassistenz im Sportverein",
 image:"images/sports_club.jpg",
 categories:["sport","teamwork","active"],
 description:"Unterstütze in einem Sportverein bei Training und Organisation.",
@@ -370,7 +370,7 @@ tasks:[
 
 {
 id:29,
-title:"Jugendzentrum",
+title:"Pädagogische Betreuung im Jugendzentrum",
 image:"images/youth_center.jpg",
 categories:["youth","people","creative"],
 description:"Hilf im Jugendzentrum bei Aktivitäten und Projekten.",
@@ -383,7 +383,7 @@ tasks:[
 */
 {
 id:30,
-title:"Café",
+title:"Servicekraft im Café",
 image:"images/cafe.jpg",
 categories:["food","service","people"],
 description:"Unterstütze im Café bei Service und Vorbereitung.",
@@ -396,7 +396,7 @@ tasks:[
 /*
 {
 id:31,
-title:"Eisdiele",
+title:"Servicekraft in der Eisdiele",
 image:"images/ice_cream.jpg",
 categories:["food","service","sales"],
 description:"Hilf in der Eisdiele beim Verkauf und Service.",
@@ -409,7 +409,7 @@ tasks:[
 */
 {
 id:32,
-title:"Blumenladen",
+title:"Unterstützung im Blumenladen",
 image:"images/flower_shop.jpg",
 categories:["creative","sales","nature"],
 description:"Unterstütze im Blumenladen bei Verkauf und Gestaltung.",
@@ -422,7 +422,7 @@ tasks:[
 /*
 {
 id:33,
-title:"Tierheim",
+title:"Tierpflegekraft",
 image:"images/animal_shelter.jpg",
 categories:["animals","care","service"],
 description:"Hilf im Tierheim bei Pflege und Betreuung der Tiere.",
@@ -435,7 +435,7 @@ tasks:[
 
 {
 id:34,
-title:"Kindergarten Bastelhilfe",
+title:"Assistenz im Kindergarten",
 image:"images/crafts.jpg",
 categories:["children","creative","care"],
 description:"Unterstütze Kinder beim Basteln und kreativen Aktivitäten.",
@@ -448,7 +448,7 @@ tasks:[
 
 {
 id:35,
-title:"Schule Assistenz",
+title:"Lernbegleitung",
 image:"images/school.jpg",
 categories:["education","people","organization"],
 description:"Hilf in der Schule bei Unterrichts- und Organisationsaufgaben.",
@@ -461,7 +461,7 @@ tasks:[
 */
 {
 id:36,
-title:"Krankenhaus Empfang",
+title:"Info-Service im Krankenhaus",
 image:"images/hospital.jpg",
 categories:["health","service","people"],
 description:"Unterstütze im Empfangsbereich eines Krankenhauses.",
@@ -474,7 +474,7 @@ tasks:[
 
 {
 id:37,
-title:"Rathaus",
+title:"Bürgerbüro-Service",
 image:"images/townhall.jpg",
 categories:["administration","organization","people"],
 description:"Hilf im Rathaus bei einfachen Verwaltungsaufgaben.",
@@ -487,7 +487,7 @@ tasks:[
 
 {
 id:38,
-title:"Technik/IT Hilfe",
+title:"Technik-Support",
 image:"images/it_support.jpg",
 categories:["technology","support","office"],
 description:"Unterstütze bei einfachen IT- und Technikaufgaben.",
@@ -500,7 +500,7 @@ tasks:[
 /*
 {
 id:39,
-title:"Museum",
+title:"Besucherbetreuung im Museum",
 image:"images/museum.jpg",
 categories:["culture","education","organization"],
 description:"Hilf im Museum bei Ausstellungen und Besuchern.",
@@ -513,7 +513,7 @@ tasks:[
 */
 {
 id:40,
-title:"Kino",
+title:"Servicekraft im Kino",
 image:"images/cinema.jpg",
 categories:["entertainment","service","people"],
 description:"Unterstütze im Kino bei Organisation und Gästeservice.",
