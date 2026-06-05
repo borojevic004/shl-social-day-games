@@ -55,6 +55,10 @@ const SHLMatchmaker = (() => {
     return [...new Set([...(job.categories || []), ...(jobAttributes[job.id] || [])])];
   }
 
+   function getAttributeLabel(attribute) {
+    return (typeof attributeLabels !== "undefined" && attributeLabels[attribute]) || attribute;
+  }
+
   function getJobScore(job) {
     return getJobAttributes(job).reduce((total, category, index) => {
       const weight = index === 0 ? 4 : 2;
@@ -148,8 +152,7 @@ const SHLMatchmaker = (() => {
       ${imageHtml(job)}
       <p class="modal-description">${job.description || "Dieser Job passt gut zu deinen Interessen!"}</p>
       <div class="modal-tags">
-        ${getJobAttributes(job).slice(0, 5).map(category => `<span>${category}</span>`).join("")}
-      </div>
+        ${getJobAttributes(job).slice(0, 5).map(category => `<span>${getAttributeLabel(category)}</span>`).join("")}
       <div class="modal-bullets">
         <p>So könnte dein Sozialer Tag dort aussehen:</p>
         <ul>${(job.tasks || []).map(task => `<li>${task}</li>`).join("")}</ul>
