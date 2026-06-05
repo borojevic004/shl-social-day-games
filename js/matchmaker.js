@@ -106,8 +106,8 @@ const SHLMatchmaker = (() => {
   function showBuzzer() {
     els.controls.style.display = "none";
     els.progress.textContent = "";
-    els.subtitle.textContent = "Jetzt kommt dein persoenlicher Match.";
-    els.screenSub.textContent = "Druecke den Buzzer und finde deinen passenden Sozialer-Tag-Job.";
+    els.subtitle.textContent = "Jetzt kommt dein persönliches Match!!";
+    els.screenSub.textContent = "Drücke den Buzzer und finde deinen passenden Sozialer Tag Job!!";
     els.hint.textContent = "";
     els.card.className = "card buzzer-card card-pop";
     els.card.innerHTML = `
@@ -124,13 +124,13 @@ const SHLMatchmaker = (() => {
     state.resultShown = true;
 
     const job = findBestJob();
-    els.subtitle.textContent = "Dein ST-Job Match";
-    els.screenSub.textContent = "Dieser Job passt am besten zu deinen ausgewaehlten Interessen.";
+    els.subtitle.textContent = "Dein Sozialer Tag Job Match";
+    els.screenSub.textContent = "Dieser Job passt am besten zu deinen ausgewählten Interessen";
     els.progress.textContent = "";
     els.hint.textContent = "";
     els.card.innerHTML = `
       <div class="int-text">It's a Match!</div>
-      <div class="int-sub">Dein Ergebnis ist im Pop-up geoeffnet.</div>
+      <div class="int-sub">Dein Ergebnis ist im Pop-up geöffnet.</div>
       <button class="restart" id="restart" type="button">Nochmal swipen</button>
     `;
 
@@ -144,14 +144,14 @@ const SHLMatchmaker = (() => {
     SHLModal.open(`
       <div class="modal-title" id="job-modal-title">It's a Match!</div>
       <div class="modal-job">${job.title}</div>
-      <div class="modal-meta">Dein persoenlicher Vorschlag fuer den Sozialen Tag</div>
+      <div class="modal-meta">Dein persoenlicher Vorschlag für den Sozialen Tag</div>
       ${imageHtml(job)}
-      <p class="modal-description">${job.description || "Dieser Job passt gut zu deinen Interessen."}</p>
+      <p class="modal-description">${job.description || "Dieser Job passt gut zu deinen Interessen!"}</p>
       <div class="modal-tags">
         ${getJobAttributes(job).slice(0, 5).map(category => `<span>${category}</span>`).join("")}
       </div>
       <div class="modal-bullets">
-        <p>So koennte dein Sozialer Tag dort aussehen:</p>
+        <p>So könnte dein Sozialer Tag dort aussehen:</p>
         <ul>${(job.tasks || []).map(task => `<li>${task}</li>`).join("")}</ul>
       </div>
       <div class="modal-actions">
@@ -175,7 +175,7 @@ const SHLMatchmaker = (() => {
     SHLConfetti.clear();
     els.controls.style.display = "flex";
     els.subtitle.textContent = "Swipe deine Interessen und finde heraus, welcher Top Job zu dir passt!";
-    els.screenSub.textContent = "Swipe oder waehle unten, was zu dir passt.";
+    els.screenSub.textContent = "Swipe oder wähle unten, was zu dir passt.";
     showInterest();
   }
 
