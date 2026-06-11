@@ -1,82 +1,96 @@
 function createSwipeController(element, options = {}) {
   const threshold = options.threshold || 70;
-  const restraint = options.restraint || 90;
-  const maxPreview = options.maxPreview || 120;
+  const minFlickDistance = options.minFlickDistance || 30;
+  const flickVelocity = options.flickVelocity || 0.45;
+  const restraint = options.restraint || 100;
+  const maxPreview = options.maxPreview || 130;
   const onSwipe = options.onSwipe || function () {};
   const canSwipe = options.canSwipe || function () { return true; };
 
-  let pointerDown = false;
+  let activePointerId = null;
   let startX = 0;
   let startY = 0;
   let currentX = 0;
-
-  function getPoint(event) {
-    if (event.changedTouches && event.changedTouches.length) {
-      return event.changedTouches[0];
-    }
-    if (event.touches && event.touches.length) {
-      return event.touches[0];
-    }
-    return event;
-  }
+  let currentY = 0;
+  let startTime = 0;
+  let isAnimating = false;
 
   function resetCard() {
     element.style.transform = "";
     element.style.opacity = "";
+    element.removeAttribute("data-swipe-direction");
   }
 
   function previewCard(deltaX) {
     const clamped = Math.max(-maxPreview, Math.min(maxPreview, deltaX));
     const rotation = clamped / 18;
+
     element.style.transform = `translateX(${clamped}px) rotate(${rotation}deg)`;
     element.style.opacity = String(1 - Math.min(Math.abs(clamped) / 420, 0.25));
+    element.dataset.swipeDirection = deltaX >= 0 ? "right" : "left";
   }
 
   function animateOut(direction) {
-    const offset = direction === "right" ? 260 : -260;
-    const rotation = direction === "right" ? 10 : -10;
+    if (isAnimating) return;
+    isAnimating = true;
+
+    const offset = direction === "right" ? 360 : -360;
+    const rotation = direction === "right" ? 12 : -12;
     element.style.transform = `translateX(${offset}px) rotate(${rotation}deg)`;
     element.style.opacity = "0";
 
     window.setTimeout(() => {
       resetCard();
+      isAnimating = false;
       onSwipe(direction);
     }, 220);
   }
 
   function start(event) {
-    if (!canSwipe()) return;
-    const point = getPoint(event);
-    pointerDown = true;
-    startX = point.clientX;
-    startY = point.clientY;
+    if (!canSwipe() || isAnimating || event.button > 0) return;
+
+    activePointerId = event.pointerId;
+    startX = event.clientX;
+    startY = event.clientY;
     currentX = startX;
+    currentY = startY;
+    startTime = performance.now();
     element.classList.add("is-swiping");
+
+    if (element.setPointerCapture) {
+      element.setPointerCapture(event.pointerId);
+    }
   }
 
   function move(event) {
-    if (!pointerDown || !canSwipe()) return;
-    const point = getPoint(event);
-    const deltaX = point.clientX - startX;
-    const deltaY = point.clientY - startY;
+    if (event.pointerId !== activePointerId || !canSwipe()) return;
+
+    currentX = event.clientX;
+    currentY = event.clientY;
+    const deltaX = currentX - startX;
+    const deltaY = currentY - startY;
 
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      currentX = point.clientX;
       previewCard(deltaX);
       if (event.cancelable) event.preventDefault();
     }
   }
 
   function end(event) {
-    if (!pointerDown) return;
-    const point = getPoint(event);
-    const deltaX = (point.clientX || currentX) - startX;
-    const deltaY = point.clientY - startY;
+    if (event.pointerId !== activePointerId) return;
 
-    pointerDown = false;
+    const deltaX = currentX - startX;
+    const deltaY = currentY - startY;
+    const elapsed = Math.max(performance.now() - startTime, 1);
+    const velocity = Math.abs(deltaX) / elapsed;
+    const passedDistance = Math.abs(deltaX) >= threshold;
+    const passedFlick = Math.abs(deltaX) >= minFlickDistance && velocity >= flickVelocity;
+    const stayedHorizontal = Math.abs(deltaY) <= restraint;
+
+    activePointerId = null;
     element.classList.remove("is-swiping");
 
-    if (Math.abs(deltaX) >= threshold && Math.abs(deltaY) <= restraint) {
+    if ((passedDistance || passedFlick) && stayedHorizontal) {
       animateOut(deltaX > 0 ? "right" : "left");
       return;
     }
@@ -84,126 +98,33 @@ function createSwipeController(element, options = {}) {
     resetCard();
   }
 
-  element.addEventListener("touchstart", start, { passive: true });
-  element.addEventListener("touchmove", move, { passive: false });
-  element.addEventListener("touchend", end, { passive: true });
-  element.addEventListener("mousedown", start);
-  window.addEventListener("mousemove", move);
-  window.addEventListener("mouseup", end);
+  function handleKeyboard(event) {
+    if (!canSwipe() || isAnimating) return;
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      animateOut("right");
+    }
+
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      animateOut("left");
+    }
+  }
+
+  element.addEventListener("pointerdown", start);
+  element.addEventListener("pointermove", move);
+  element.addEventListener("pointerup", end);
+  element.addEventListener("pointercancel", end);
+  window.addEventListener("keydown", handleKeyboard);
 
   return {
     destroy() {
-      element.removeEventListener("touchstart", start);
-      element.removeEventListener("touchmove", move);
-      element.removeEventListener("touchend", end);
-      element.removeEventListener("mousedown", start);
-      window.removeEventListener("mousemove", move);
-      window.removeEventListener("mouseup", end);
-    },
-    reset: resetCard
-  };
-}
-function createSwipeController(element, options = {}) {
-  const threshold = options.threshold || 70;
-  const restraint = options.restraint || 90;
-  const maxPreview = options.maxPreview || 120;
-  const onSwipe = options.onSwipe || function () {};
-  const canSwipe = options.canSwipe || function () { return true; };
-
-  let pointerDown = false;
-  let startX = 0;
-  let startY = 0;
-  let currentX = 0;
-
-  function getPoint(event) {
-    if (event.changedTouches && event.changedTouches.length) {
-      return event.changedTouches[0];
-    }
-    if (event.touches && event.touches.length) {
-      return event.touches[0];
-    }
-    return event;
-  }
-
-  function resetCard() {
-    element.style.transform = "";
-    element.style.opacity = "";
-  }
-
-  function previewCard(deltaX) {
-    const clamped = Math.max(-maxPreview, Math.min(maxPreview, deltaX));
-    const rotation = clamped / 18;
-    element.style.transform = `translateX(${clamped}px) rotate(${rotation}deg)`;
-    element.style.opacity = String(1 - Math.min(Math.abs(clamped) / 420, 0.25));
-  }
-
-  function animateOut(direction) {
-    const offset = direction === "right" ? 260 : -260;
-    const rotation = direction === "right" ? 10 : -10;
-    element.style.transform = `translateX(${offset}px) rotate(${rotation}deg)`;
-    element.style.opacity = "0";
-
-    window.setTimeout(() => {
-      resetCard();
-      onSwipe(direction);
-    }, 220);
-  }
-
-  function start(event) {
-    if (!canSwipe()) return;
-    const point = getPoint(event);
-    pointerDown = true;
-    startX = point.clientX;
-    startY = point.clientY;
-    currentX = startX;
-    element.classList.add("is-swiping");
-  }
-
-  function move(event) {
-    if (!pointerDown || !canSwipe()) return;
-    const point = getPoint(event);
-    const deltaX = point.clientX - startX;
-    const deltaY = point.clientY - startY;
-
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      currentX = point.clientX;
-      previewCard(deltaX);
-      if (event.cancelable) event.preventDefault();
-    }
-  }
-
-  function end(event) {
-    if (!pointerDown) return;
-    const point = getPoint(event);
-    const deltaX = (point.clientX || currentX) - startX;
-    const deltaY = point.clientY - startY;
-
-    pointerDown = false;
-    element.classList.remove("is-swiping");
-
-    if (Math.abs(deltaX) >= threshold && Math.abs(deltaY) <= restraint) {
-      animateOut(deltaX > 0 ? "right" : "left");
-      return;
-    }
-
-    resetCard();
-  }
-
-  element.addEventListener("touchstart", start, { passive: true });
-  element.addEventListener("touchmove", move, { passive: false });
-  element.addEventListener("touchend", end, { passive: true });
-  element.addEventListener("mousedown", start);
-  window.addEventListener("mousemove", move);
-  window.addEventListener("mouseup", end);
-
-  return {
-    destroy() {
-      element.removeEventListener("touchstart", start);
-      element.removeEventListener("touchmove", move);
-      element.removeEventListener("touchend", end);
-      element.removeEventListener("mousedown", start);
-      window.removeEventListener("mousemove", move);
-      window.removeEventListener("mouseup", end);
+      element.removeEventListener("pointerdown", start);
+      element.removeEventListener("pointermove", move);
+      element.removeEventListener("pointerup", end);
+      element.removeEventListener("pointercancel", end);
+      window.removeEventListener("keydown", handleKeyboard);
     },
     reset: resetCard
   };
