@@ -2,6 +2,7 @@ const SHLModal = (() => {
   const backdrop = document.getElementById("job-modal");
   const content = document.getElementById("job-modal-content");
   let previouslyFocusedElement = null;
+  let dismissible = true;
 
   function close() {
     if (!backdrop || !backdrop.classList.contains("is-open")) return;
@@ -15,15 +16,16 @@ const SHLModal = (() => {
     }
   }
 
-  function open(html, afterRender) {
+  function open(html, afterRender, options = {}) {
     if (!backdrop || !content) return;
 
+    dismissible = options.dismissible !== false;
     previouslyFocusedElement = document.activeElement;
     content.innerHTML = html;
     backdrop.classList.add("is-open");
     backdrop.setAttribute("aria-hidden", "false");
     backdrop.onclick = (event) => {
-      if (event.target === backdrop) close();
+      if (dismissible && event.target === backdrop) close();
     };
 
     document.addEventListener("keydown", handleKeydown);
@@ -34,7 +36,7 @@ const SHLModal = (() => {
   }
 
   function handleKeydown(event) {
-    if (event.key === "Escape") close();
+    if (event.key === "Escape" && dismissible) close();
   }
 
   return {
