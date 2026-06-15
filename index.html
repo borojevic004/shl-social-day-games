@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="css/portrait.css" media="(orientation: portrait)" />
   <link rel="stylesheet" href="css/landscape.css" media="(orientation: landscape)" />
   <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/job-swiper.css" />
+  <link rel="stylesheet" href="css/geo-quiz.css" />
 </head>
 <body class="home-active">
   <div class="confetti-container" id="confettiContainer" aria-hidden="true"></div>
@@ -53,7 +55,7 @@
             </span>
           </button>
 
-          <button class="home-menu-card home-menu-swiper" type="button" aria-disabled="true">
+          <button class="home-menu-card home-menu-swiper" id="start-job-swiper" type="button">
             <span class="home-menu-icon" aria-hidden="true">
               <svg viewBox="0 0 64 64">
                 <rect x="19" y="7" width="27" height="50" rx="5" />
@@ -66,15 +68,28 @@
             </span>
           </button>
 
-          <button class="home-menu-card home-menu-runner" type="button" aria-disabled="true">
+          <button class="home-menu-card home-menu-runner" id="start-geo-quiz" type="button">
             <span class="home-menu-icon" aria-hidden="true">
               <svg viewBox="0 0 64 64">
-                <circle cx="39" cy="10" r="5" />
-                <path d="m34 20-9 8 8 7 6-10 10 7M33 35l-8 15-12 4M35 35l10 7 7 12M24 27l-9-2" />
+                <path d="M32 57s18-17 18-34A18 18 0 1 0 14 23c0 17 18 34 18 34Z" />
+                <circle cx="32" cy="23" r="7" />
               </svg>
             </span>
             <span class="home-menu-copy">
-              <strong>Runner</strong>
+              <strong>Geo Quiz</strong>
+              <small>Finde unsere Projektländer</small>
+            </span>
+          </button>
+
+          <button class="home-menu-card home-menu-projects" type="button" aria-disabled="true">
+            <span class="home-menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64">
+                <rect x="13" y="11" width="38" height="43" rx="5" />
+                <path d="M23 11V7h18v4M22 25l4 4 7-8M22 40l4 4 7-8M38 26h7M38 41h7" />
+              </svg>
+            </span>
+            <span class="home-menu-copy">
+              <strong>Projekte</strong>
               <small>Demnächst verfügbar</small>
             </span>
           </button>
@@ -91,15 +106,12 @@
       <header class="header">
         <div class="badge">SOZIALER TAG 2026</div>
         <br> <br>
-        <h1>Dein Sozialer Tag Mobil</h1>
-        <p id="subtitle">Swipe deine Interessen und finde heraus, welcher Top Job zu dir passt!</p>
+        <h1>Finden dein Job</h1>
+        <p id="subtitle">Swipe deine Interessen und finde heraus, welcher Job zu dir passt!</p>
         <br>
       </header>
 
       <section id="screen-interests" aria-labelledby="screen-title">
-        <h2 class="screen-title" id="screen-title">ST Matchmaker</h2>
-        <p class="screen-sub" id="screen-sub">Swipe oder wähle unten, was zu dir passt.</p>
-        <br> <br>
 
         <div class="card-container">
           <div
@@ -125,6 +137,79 @@
         </div>
       </section>
     </section>
+
+    <section class="job-swiper-screen" id="screen-job-swiper" aria-hidden="true">
+      <button class="job-swiper-back-btn" id="job-swiper-back" type="button" aria-label="Zurück zum Hauptmenü">
+        <span aria-hidden="true">←</span>
+        <span class="job-swiper-back-label">Zurück</span>
+      </button>
+
+      <div class="job-swiper-panel">
+        <header class="job-swiper-header">
+          <div class="job-swiper-badge">SOZIALER TAG 2026</div>
+          <h1>Job Swiper</h1>
+          <p>Swipe Job-Ideen und entdecke, welcher Job dich spontan begeistert.</p>
+        </header>
+
+        <div class="job-swiper-stage">
+          <div
+            class="job-swiper-card"
+            id="job-swiper-card"
+            role="group"
+            aria-label="Jobkarte"
+            tabindex="0"
+          ></div>
+        </div>
+
+        <div class="job-swiper-controls" id="job-swiper-controls">
+          <button class="job-swiper-choice job-swiper-no" id="job-swiper-no" type="button">
+            <span aria-hidden="true">✕</span> Eher nicht
+          </button>
+          <button class="job-swiper-choice job-swiper-yes" id="job-swiper-yes" type="button">
+            <span aria-hidden="true">♥</span> Gefällt mir
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="geo-quiz-screen" id="screen-geo-quiz" aria-hidden="true">
+      <button class="geo-quiz-back-btn" id="geo-quiz-back" type="button" aria-label="Zurück zum Hauptmenü">
+        <span aria-hidden="true">←</span>
+        <span class="geo-quiz-back-label">Zurück</span>
+      </button>
+
+      <div class="geo-quiz-panel">
+        <header class="geo-quiz-header">
+          <div class="geo-quiz-badge">SOZIALER TAG 2026</div>
+          <h1>Geo Quiz</h1>
+          <p>Wo liegen unsere Projektländer?</p>
+        </header>
+
+        <div class="geo-quiz-layout">
+          <div class="geo-quiz-map-wrap" id="geo-quiz-map-wrap">
+            <canvas
+              id="geo-quiz-map"
+              width="650"
+              height="600"
+              role="img"
+              aria-label="Karte von Europa und dem Nahen Osten"
+            ></canvas>
+            <div class="geo-quiz-loading" id="geo-quiz-loading">Karte wird geladen...</div>
+          </div>
+
+          <aside class="geo-quiz-card">
+            <div class="geo-quiz-progress" id="geo-quiz-progress">Land 1 von 7</div>
+            <p class="geo-quiz-question" id="geo-quiz-question">Finde:</p>
+            <h2 id="geo-quiz-country">Deutschland</h2>
+            <p class="geo-quiz-feedback" id="geo-quiz-feedback" aria-live="polite">
+              Tippe auf das richtige Land.
+            </p>
+            <button class="geo-quiz-skip" id="geo-quiz-skip" type="button">Überspringen</button>
+          </aside>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script src="data/interests.js"></script>
@@ -134,7 +219,10 @@
   <script src="js/modal.js"></script>
   <script src="js/confetti.js"></script>
   <script src="js/matching.js"></script>
+  <script src="js/job-details.js"></script>
   <script src="js/swiping.js"></script>
   <script src="js/matchmaker.js"></script>
+  <script src="js/job-swiper.js"></script>
+  <script src="js/geo-quiz.js"></script>
 </body>
 </html>
