@@ -1,6 +1,6 @@
 const SHLMatchmaker = (() => {
   const INTERESTS_PER_ROUND = 12;
-  const RESULT_LIMIT = 8;
+  const RESULT_LIMIT = 3;
 
   const state = {
     currentIndex: 0,
@@ -64,6 +64,43 @@ const SHLMatchmaker = (() => {
       .map(([attribute]) => attribute);
   }
 
+  function boostBestMatchScore(matches) {
+    if (!matches.length || matches[0].matchScore >= 80) return matches;
+
+    matches[0] = {
+      ...matches[0],
+      matchScore: Math.floor(Math.random() * 20) + 81
+    };
+
+    return matches;
+  }
+
+  function adjustSimilarMatchScores(matches) {
+    return matches.reduce((adjustedMatches, job) => {
+      if (!adjustedMatches.length) return [job];
+
+      const previousSimilarJob = adjustedMatches
+        .reverse()
+        .find((previousJob) => previousJob.group === job.group);
+
+      adjustedMatches.reverse();
+
+      if (!previousSimilarJob) {
+        adjustedMatches.push(job);
+        return adjustedMatches;
+      }
+
+      const scoreDifference = Math.floor(Math.random() * 11) + 5;
+
+      adjustedMatches.push({
+        ...job,
+        matchScore: Math.max(0, previousSimilarJob.matchScore - scoreDifference)
+      });
+
+      return adjustedMatches;
+    }, []);
+  }
+
   function showInterest() {
     if (state.currentIndex >= state.activeInterests.length) {
       showBuzzer();
@@ -78,7 +115,7 @@ const SHLMatchmaker = (() => {
       ${interest.description ? `<div class="int-sub">${interest.description}</div>` : ""}
     `;
     els.progress.textContent = `Interesse ${state.currentIndex + 1} von ${state.activeInterests.length}`;
-    els.hint.textContent = `${state.selectedInterestIds.length} Interessen ausgewählt`;
+    els.hint.textContent = "";
     els.card.setAttribute("aria-label", `${interest.text}. ${interest.description || ""}`);
     popCard();
   }
@@ -155,8 +192,10 @@ const SHLMatchmaker = (() => {
     els.controls.style.display = "none";
     els.progress.textContent = "";
     els.subtitle.textContent = "Jetzt kommt dein persönliches Match!";
-    els.screenSub.textContent = "Drücke den Buzzer und entdecke deine besten Sozialer-Tag-Jobs.";
-    els.hint.textContent = `${state.selectedInterestIds.length} Interessen ausgewählt`;
+    if (els.screenSub) {
+      els.screenSub.textContent = "Drücke den Buzzer und entdecke deine besten Sozialer-Tag-Jobs.";
+    }
+    els.hint.textContent = "";
     els.card.className = "card buzzer-card card-pop";
     els.card.setAttribute("aria-label", "Alle Interessen wurden bewertet. Matches können angezeigt werden.");
     els.card.innerHTML = `
@@ -171,14 +210,13 @@ const SHLMatchmaker = (() => {
   function renderRankingModal() {
     SHLModal.open(`
       <div class="modal-title" id="job-modal-title">Deine besten Matches</div>
-      <p class="modal-meta">Je höher der Wert, desto stärker überschneiden sich deine Interessen mit dem Job.</p>
       <div class="match-results">
         ${state.bestMatches.map((job, index) => `
           <button class="match-result" type="button" data-job-id="${job.id}">
             <span class="match-rank">${index + 1}</span>
             ${imageHtml(job, "match-result-image")}
             <span class="match-result-copy">
-              <strong>${job.title}</strong>
+              <strong>Bereich: ${job.title}</strong>
               <small>${job.group}</small>
             </span>
             <span class="match-score">${job.matchScore}%</span>
@@ -204,16 +242,22 @@ const SHLMatchmaker = (() => {
   function showResults() {
     if (state.resultShown) return;
     state.resultShown = true;
-    state.bestMatches = SHLMatching.getBestMatches(
-      jobs,
-      interests,
-      state.selectedInterestIds,
-      RESULT_LIMIT
+    state.bestMatches = adjustSimilarMatchScores(
+      boostBestMatchScore(
+        SHLMatching.getBestMatches(
+          jobs,
+          interests,
+          state.selectedInterestIds,
+          RESULT_LIMIT
+        )
+      )
     );
 
     const bestJob = state.bestMatches[0];
     els.subtitle.textContent = "Deine Sozialer Tag Job Matches";
-    els.screenSub.textContent = "Deine Auswahl wurde mit allen verfügbaren Jobs verglichen.";
+    if (els.screenSub) {
+      els.screenSub.textContent = "Deine Auswahl wurde mit allen verfügbaren Jobs verglichen.";
+    }
     els.progress.textContent = "";
     els.hint.textContent = "";
     els.card.className = "card result-card card-pop";
@@ -230,28 +274,22 @@ const SHLMatchmaker = (() => {
     document.getElementById("show-ranking").addEventListener("click", renderRankingModal);
     document.getElementById("restart").addEventListener("click", () => startRound(true));
     renderRankingModal();
-    SHLConfetti.start();
+    SHLConfetti.start(175);
     popCard();
   }
 
   function openJobModal(job) {
-    const tasks = (job.tasks || []).map((task) => `<li>${task}</li>`).join("");
+    const tasks = SHLJobDetails.getJobTasks(job).map((task) => `<li>${task}</li>`).join("");
 
     SHLModal.open(`
       <div class="modal-title" id="job-modal-title">${job.matchScore}% Match</div>
-      <div class="modal-job">${job.title}</div>
+      <div class="modal-job">Bereich: ${job.title}</div>
       <div class="modal-meta">${job.group}</div>
       ${imageHtml(job)}
-      <p class="modal-description">${job.description}</p>
-      <div class="modal-tags">
-        ${getTopAttributes(job).map((category) => `<span>${getAttributeLabel(category)}</span>`).join("")}
+      <div class="modal-bullets">
+        <p>Das kannst du in diesem Beruf machen:</p>
+        <ul>${tasks}</ul>
       </div>
-      ${tasks ? `
-        <div class="modal-bullets">
-          <p>So könnte dein Sozialer Tag dort aussehen:</p>
-          <ul>${tasks}</ul>
-        </div>
-      ` : ""}
       <div class="modal-actions">
         <button class="modal-close-btn" id="job-modal-back" type="button">Zurück zu Top ${RESULT_LIMIT}</button>
         <button class="modal-restart-btn" id="job-modal-restart" type="button">Nochmal swipen</button>
@@ -280,8 +318,11 @@ const SHLMatchmaker = (() => {
     els.card.classList.remove("swipe-tutorial");
     els.card.removeAttribute("data-tutorial-direction");
     els.card.removeAttribute("data-tutorial-label");
-    els.subtitle.textContent = "Swipe deine Interessen und finde heraus, welcher Top Job zu dir passt!";
-    els.screenSub.textContent = "Nach rechts für „Passt zu mir“, nach links für „Eher nicht“.";
+    els.subtitle.textContent = "Swipe deine Interessen und finde heraus, welcher Job zu dir passt!";
+    if (els.screenSub) {
+      els.screenSub.textContent = "Nach rechts für „Passt zu mir“, nach links für „Eher nicht“.";
+    }
+    els.hint.textContent = "";
     showInterest();
 
     if (withTutorial) {
