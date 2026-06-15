@@ -206,6 +206,17 @@ select {
   position: relative;
 }
 
+body.matchmaker-active .app {
+  width: min(calc(100% - 12px), 720px);
+  max-width: 720px;
+  min-height: min(530px, calc(100dvh - 32px));
+  padding-inline: 24px;
+}
+
+body.matchmaker-active .hint:empty {
+  display: none;
+}
+
 .matchmaker-back-btn {
   position: absolute;
   top: 0;
@@ -322,7 +333,7 @@ select {
   padding: 22px 20px;
   border-radius: 20px;
   background: var(--shl-weiss);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 25px rgba(38, 47, 94, 0.18);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -807,15 +818,21 @@ button:focus-visible,
 
 .confetti-piece {
   position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+  width: var(--confetti-width, 8px);
+  height: var(--confetti-height, 8px);
+  border-radius: var(--confetti-radius, 50%);
   opacity: 0.9;
   top: 50vh;
   left: 50vw;
   animation-name: confetti-firework;
   animation-timing-function: ease-out;
-  animation-iteration-count: infinite;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+.confetti-piece-burst {
+  animation-name: confetti-center-burst;
+  animation-timing-function: cubic-bezier(0.16, 0.74, 0.2, 1);
 }
 
 @keyframes confetti-firework {
@@ -825,7 +842,45 @@ button:focus-visible,
   }
 
   100% {
-    transform: translate3d(var(--dx), var(--dy), 0) scale(1.4);
+    transform:
+      translate3d(var(--dx), var(--dy), 0)
+      rotate(var(--confetti-rotation, 720deg))
+      scale(1.25);
+    opacity: 0;
+  }
+}
+
+@keyframes confetti-center-burst {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.15);
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  38% {
+    transform:
+      translate3d(var(--burst-x), var(--burst-y), 0)
+      rotate(var(--burst-rotation, 396deg))
+      scale(1.18);
+    opacity: 1;
+  }
+
+  52% {
+    transform:
+      translate3d(var(--burst-x), calc(var(--burst-y) + 22px), 0)
+      rotate(var(--mid-rotation, 518deg))
+      scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform:
+      translate3d(var(--fall-x), var(--fall-y), 0)
+      rotate(var(--confetti-rotation, 720deg))
+      scale(0.85);
     opacity: 0;
   }
 }
