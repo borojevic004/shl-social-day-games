@@ -105,9 +105,10 @@ body.home-active .app::after {
 
 .home-menu {
   width: 100%;
+  max-width: 920px;
   margin-top: clamp(24px, 4vh, 46px);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(14px, 2.3vw, 30px);
 }
 
@@ -150,6 +151,23 @@ body.home-active .app::after {
 
 .home-menu-runner {
   background: var(--shl-blau);
+  cursor: pointer;
+  transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease;
+}
+
+.home-menu-runner:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.05);
+  box-shadow: 0 13px 0 rgba(0, 0, 0, 0.16);
+}
+
+.home-menu-runner:active {
+  transform: translateY(3px);
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.16);
+}
+
+.home-menu-projects {
+  background: var(--shl-violett);
   cursor: default;
 }
 
@@ -213,26 +231,28 @@ body.home-active .app::after {
 
 .home-decor-globe {
   top: -1vw;
-  left: 1vw;
-  width: 150px;
+  left: 0vw;
+  width: 148px;
+  transform: rotate(-45deg);
+}
+
+.home-decor-megaphone {
+  top:0vw;
+  right: 1vw;
+  width: 120px;
+  transform: rotate(11deg);
+}
+
+.home-decor-shl {
+  top: 37%;
+  right: 5vw;
+  width: 106px;
+  transform: rotate(-8deg);
 }
 
 .home-decor-location {
-  top: -3vw;
-  right: -3vw;
-  width: 70px;
-}
-
-.home-decor-calendar {
-  top: 31%;
-  right: -6vw;
-  width: 55px;
-  transform: rotate(5deg);
-}
-
-.home-decor-heart {
   bottom: 0vw;
-  left: 3vw;
+  left: 2vw;
   width: 130px;
   transform: rotate(10deg);
 }
@@ -243,14 +263,14 @@ body.home-active .app::after {
   width: 130px;
 }
 
-.home-decor-megaphone {
-  right: 4vw;
+.home-decor-heart {
+  right: 1vw;
   bottom: 0vw;
   transform: rotate(10deg);
-  width: 85px;
+  width: 130px;
 }
 
-.home-decor-shl {
+.home-decor-calendar {
   left: 1vw;
   bottom: 32%;
   width: clamp(80px, 12vw, 180px);
@@ -261,10 +281,10 @@ body.home-active .app::after {
 .home-arrow {
   z-index: 3;
   width: clamp(42px, 5vw, 72px);
-  right: 34%;
-  bottom: 40%;
+  right: 36%;
+  bottom: 55%;
   left: auto;
-  transform: none;
+  transform: rotate(-20deg);
 }
 
 @media (orientation: portrait) {
@@ -303,11 +323,11 @@ body.home-active .app::after {
     max-width: 600px;
     margin-top: clamp(28px, 4vh, 42px);
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 14px;
   }
 
   .home-menu-card {
-    min-height: 112px;
+    min-height: 94px;
     grid-template-columns: 106px 1fr;
     border-radius: 16px;
   }
@@ -325,48 +345,61 @@ body.home-active .app::after {
   }
 
   .home-decor-globe {
-    top: 5%;
-    left: -5vw;
+    top: -1vw;
+    left: 0vw;
+    width: 150px;
+    transform: rotate(-52deg);
   }
 
   .home-decor-location {
-    top: 12%;
-    right: -4vw;
+    bottom: 2vw;
+    left: 2vw;
+    width: 130px;
+    transform: rotate(10deg);
   }
 
   .home-decor-calendar {
-    top: 30%;
-    right: -5vw;
+    left: 2vw;
+    bottom: 36%;
+    width: clamp(80px, 12vw, 180px);
+    width: 100px;
+    transform: rotate(-8deg);
   }
 
   .home-decor-heart {
-    right: -4vw;
-    bottom: 13%;
-    left: auto;
+    right: 2vw;
+    bottom: 2vw;
+    transform: rotate(-10deg);
+    width: 136px;
   }
 
   .home-decor-sun {
-    top: auto;
-    bottom: -2%;
-    left: -5vw;
+    top: 25%;
+    left: 5vw;
+    width: 133px;
   }
 
   .home-decor-megaphone {
-    right: -5vw;
-    bottom: -3vw;
+    top:1vw;
+    right: 0vw;
+    width: 120px;
+    transform: rotate(11deg);
   }
 
   .home-decor-shl {
-    display: none;
+    top: 30%;
+    right: 4vw;
+    width: 110px;
+    transform: rotate(-8deg);
   }
 
   .home-arrow {
-    width: 58px;
-    right: 4%;
-    top: 26%;
-    bottom: auto;
+    z-index: 3;
+    width: clamp(60px, 5vw, 72px);
+    right: 23%;
+    bottom: 55%;
     left: auto;
-    transform: none;
+    transform: rotate(-20deg);
   }
 }
 
@@ -400,11 +433,11 @@ body.home-active .app::after {
 
   .home-menu {
     margin-top: clamp(12px, 3vh, 22px);
-    gap: 16px;
+    gap: 12px 16px;
   }
 
   .home-menu-card {
-    min-height: clamp(82px, 22vh, 116px);
+    min-height: clamp(72px, 18vh, 94px);
     padding: 10px 12px;
     border-radius: 14px;
     grid-template-columns: minmax(50px, 0.38fr) 1fr;
