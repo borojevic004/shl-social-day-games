@@ -1,6 +1,5 @@
 const SHLJobFinder = (() => {
-  // When the page is online, set this to the public page URL, for example:
-  // "https://socialday.de/job-finder"
+
   const PUBLIC_JOB_FINDER_URL = "http://192.168.178.179:8000/index.html";
 
   const titleSearchTerms = {
@@ -133,7 +132,7 @@ const SHLJobFinder = (() => {
       return `https://www.google.com/maps/search/${encodedQuery}/@${coords.lat},${coords.lng},14z`;
     }
 
-    return `https://www.google.com/maps/search/${encodedQuery}`;
+    return `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`;
   }
 
   function getBaseUrl() {
@@ -149,8 +148,12 @@ const SHLJobFinder = (() => {
     return url.toString();
   }
 
+  function getQrTargetUrl(job) {
+    return getMapsUrl(job);
+  }
+
   function getQrUrl(job) {
-    const data = encodeURIComponent(getJobUrl(job));
+    const data = encodeURIComponent(getQrTargetUrl(job));
     return `https://api.qrserver.com/v1/create-qr-code/?size=190x190&margin=8&data=${data}`;
   }
 
@@ -221,7 +224,7 @@ const SHLJobFinder = (() => {
         <img src="${getQrUrl(job)}" alt="QR-Code für ${job.title}" />
         <div>
           <strong>QR-Code scannen</strong>
-          <span>Öffnet diesen Job auf dem eigenen Handy.</span>
+          <span>Öffnet Google Maps für diesen Job auf dem eigenen Handy.</span>
         </div>
       </div>
     `;
@@ -269,6 +272,7 @@ const SHLJobFinder = (() => {
     findJobByParam,
     getJobUrl,
     getMapsUrl,
+    getQrTargetUrl,
     getQrUrl,
     getSearchTerm,
     initDeepLink,
