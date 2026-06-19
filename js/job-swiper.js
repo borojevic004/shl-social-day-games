@@ -136,11 +136,14 @@ const SHLJobSwiper = (() => {
         <h2>${displayTitle(job.title)}</h2>
         <p>${job.group}</p>
         <span>Du hast deinen Job gefunden! Starte eine neue Runde und entdecke die Jobs in einer neuen Reihenfolge.</span>
+        ${SHLJobFinder.qrHtml(job)}
+        ${SHLJobFinder.buttonHtml(job, "job-swiper-match-nearby")}
         <button class="job-swiper-match-continue" id="job-swiper-match-continue" type="button">
           Nochmal spielen
         </button>
       </div>
     `, (content) => {
+      SHLJobFinder.bindButtons(content);
       content.querySelector("#job-swiper-match-continue").onclick = startRound;
     }, { dismissible: false });
     SHLConfetti.start({
