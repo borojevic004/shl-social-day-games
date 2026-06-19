@@ -787,7 +787,8 @@ button:focus-visible,
 }
 
 .modal-close-btn,
-.modal-restart-btn {
+.modal-restart-btn,
+.job-finder-button {
   border: none;
   border-radius: 999px;
   padding: 8px 13px;
@@ -800,10 +801,60 @@ button:focus-visible,
   color: var(--shl-dunkelblau);
 }
 
-.modal-restart-btn {
+.modal-restart-btn,
+.job-finder-button {
   background: var(--shl-gelb);
   color: var(--shl-dunkelblau);
   box-shadow: 0 3px 0 var(--shl-dunkelgelb);
+}
+
+.job-finder-button {
+  font-weight: 900;
+}
+
+.job-finder-intro {
+  margin: 10px 0 14px;
+  color: var(--shl-dunkelblau);
+  font-size: 0.9rem;
+}
+
+.job-finder-qr {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto 12px;
+  padding: 10px;
+  border-radius: 18px;
+  background: var(--shl-hellgelb);
+  color: var(--shl-dunkelblau);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.job-finder-qr img {
+  width: 96px;
+  height: 96px;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  background: var(--shl-weiss);
+  padding: 6px;
+}
+
+.job-finder-qr strong,
+.job-finder-qr span {
+  display: block;
+}
+
+.job-finder-qr strong {
+  font-family: "SHL Unbounded", sans-serif;
+  font-size: 0.86rem;
+}
+
+.job-finder-qr span {
+  margin-top: 4px;
+  font-size: 0.78rem;
+  line-height: 1.25;
 }
 
 .confetti-container {
