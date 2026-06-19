@@ -168,7 +168,19 @@ body.home-active .app::after {
 
 .home-menu-projects {
   background: var(--shl-violett);
-  cursor: default;
+  cursor: pointer;
+  transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease;
+}
+
+.home-menu-projects:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.05);
+  box-shadow: 0 13px 0 rgba(0, 0, 0, 0.16);
+}
+
+.home-menu-projects:active {
+  transform: translateY(3px);
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.16);
 }
 
 .home-menu-icon {
@@ -282,7 +294,7 @@ body.home-active .app::after {
   z-index: 3;
   width: clamp(42px, 5vw, 72px);
   right: 36%;
-  bottom: 55%;
+  bottom: 56%;
   left: auto;
   transform: rotate(-20deg);
 }
