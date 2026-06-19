@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="css/home.css" />
   <link rel="stylesheet" href="css/job-swiper.css" />
   <link rel="stylesheet" href="css/geo-quiz.css" />
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="css/projects-map.css" />
 </head>
 <body class="home-active">
   <div class="confetti-container" id="confettiContainer" aria-hidden="true"></div>
@@ -77,11 +79,11 @@
             </span>
             <span class="home-menu-copy">
               <strong>Geo Quiz</strong>
-              <small>Finde unsere Projektländer</small>
+              <small>Finde unsere Projektl&auml;nder</small>
             </span>
           </button>
 
-          <button class="home-menu-card home-menu-projects" type="button" aria-disabled="true">
+          <button class="home-menu-card home-menu-projects" id="start-projects" type="button">
             <span class="home-menu-icon" aria-hidden="true">
               <svg viewBox="0 0 64 64">
                 <rect x="13" y="11" width="38" height="43" rx="5" />
@@ -90,7 +92,7 @@
             </span>
             <span class="home-menu-copy">
               <strong>Projekte</strong>
-              <small>Demnächst verfügbar</small>
+              <small>Unsere Standorte</small>
             </span>
           </button>
         </div>
@@ -98,9 +100,9 @@
     </section>
 
     <section class="matchmaker-screen" id="screen-matchmaker" aria-hidden="true">
-      <button class="matchmaker-back-btn" id="back-home" type="button" aria-label="Zurück zum Hauptmenü">
-        <span class="matchmaker-back-arrow" aria-hidden="true">←</span>
-        <span class="matchmaker-back-label">Zurück</span>
+      <button class="matchmaker-back-btn" id="back-home" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
+        <span class="matchmaker-back-arrow" aria-hidden="true">&larr;</span>
+        <span class="matchmaker-back-label">Zur&uuml;ck</span>
       </button>
 
       <header class="header">
@@ -129,8 +131,8 @@
           <p class="hint" id="hint" aria-live="polite"></p>
 
           <div class="buttons" id="controls">
-            <button class="btn btn-no" id="btnNo" type="button"><span class="btn-emoji">👎</span> Eher nicht</button>
-            <button class="btn btn-yes" id="btnYes" type="button"><span class="btn-emoji">👍</span> Passt zu mir</button>
+            <button class="btn btn-no" id="btnNo" type="button"><span class="btn-emoji">&#128078;</span> Eher nicht</button>
+            <button class="btn btn-yes" id="btnYes" type="button"><span class="btn-emoji">&#128077;</span> Passt zu mir</button>
           </div>
 
           <p class="progress" id="progress" aria-live="polite"></p>
@@ -139,9 +141,9 @@
     </section>
 
     <section class="job-swiper-screen" id="screen-job-swiper" aria-hidden="true">
-      <button class="job-swiper-back-btn" id="job-swiper-back" type="button" aria-label="Zurück zum Hauptmenü">
-        <span aria-hidden="true">←</span>
-        <span class="job-swiper-back-label">Zurück</span>
+      <button class="job-swiper-back-btn" id="job-swiper-back" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
+        <span aria-hidden="true">&larr;</span>
+        <span class="job-swiper-back-label">Zur&uuml;ck</span>
       </button>
 
       <div class="job-swiper-panel">
@@ -163,10 +165,10 @@
 
         <div class="job-swiper-controls" id="job-swiper-controls">
           <button class="job-swiper-choice job-swiper-no" id="job-swiper-no" type="button">
-            <span aria-hidden="true">✕</span> Eher nicht
+            <span aria-hidden="true">&times;</span> Eher nicht
           </button>
           <button class="job-swiper-choice job-swiper-yes" id="job-swiper-yes" type="button">
-            <span aria-hidden="true">♥</span> Gefällt mir
+            <span aria-hidden="true">&hearts;</span> Gef&auml;llt mir
           </button>
         </div>
 
@@ -174,27 +176,35 @@
     </section>
 
     <section class="geo-quiz-screen" id="screen-geo-quiz" aria-hidden="true">
-      <button class="geo-quiz-back-btn" id="geo-quiz-back" type="button" aria-label="Zurück zum Hauptmenü">
-        <span aria-hidden="true">←</span>
-        <span class="geo-quiz-back-label">Zurück</span>
+      <button class="geo-quiz-back-btn" id="geo-quiz-back" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
+        <span aria-hidden="true">&larr;</span>
+        <span class="geo-quiz-back-label">Zur&uuml;ck</span>
       </button>
 
       <div class="geo-quiz-panel">
         <header class="geo-quiz-header">
           <div class="geo-quiz-badge">SOZIALER TAG 2026</div>
           <h1>Geo Quiz</h1>
-          <p>Wo liegen unsere Projektländer?</p>
+          <p>Wo liegen unsere Projektl&auml;nder?</p>
         </header>
 
         <div class="geo-quiz-layout">
           <div class="geo-quiz-map-wrap" id="geo-quiz-map-wrap">
-            <canvas
-              id="geo-quiz-map"
-              width="650"
-              height="600"
-              role="img"
-              aria-label="Karte von Europa und dem Nahen Osten"
-            ></canvas>
+            <div class="geo-quiz-map-content" id="geo-quiz-map-content">
+              <canvas
+                id="geo-quiz-map"
+                width="650"
+                height="600"
+                role="img"
+                aria-label="Karte von Europa und dem Nahen Osten"
+              ></canvas>
+            </div>
+            <div class="geo-project-markers" id="geo-project-markers" aria-label="Projektstandorte"></div>
+            <div class="geo-zoom-controls" id="geo-zoom-controls" aria-label="Kartenzoom">
+              <button id="geo-zoom-in" type="button" aria-label="Karte vergr&ouml;&szlig;ern">+</button>
+              <button id="geo-zoom-out" type="button" aria-label="Karte verkleinern">&minus;</button>
+              <button id="geo-zoom-reset" type="button" aria-label="Zoom zur&uuml;cksetzen">1:1</button>
+            </div>
             <div class="geo-quiz-loading" id="geo-quiz-loading">Karte wird geladen...</div>
           </div>
 
@@ -205,24 +215,65 @@
             <p class="geo-quiz-feedback" id="geo-quiz-feedback" aria-live="polite">
               Tippe auf das richtige Land.
             </p>
-            <button class="geo-quiz-skip" id="geo-quiz-skip" type="button">Überspringen</button>
+            <button class="geo-quiz-skip" id="geo-quiz-skip" type="button">&Uuml;berspringen</button>
           </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects-screen" id="screen-projects" aria-hidden="true">
+      <button class="projects-back-btn" id="projects-back" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
+        <span aria-hidden="true">&larr;</span>
+        <span class="projects-back-label">Zur&uuml;ck</span>
+      </button>
+
+      <div class="projects-panel">
+        <header class="projects-header">
+          <div class="projects-badge">SOZIALER TAG 2026</div>
+          <h1>Projekte</h1>
+          <p>Entdecke, wo SHL Projekte junge Menschen unterst&uuml;tzen.</p>
+        </header>
+
+        <div class="projects-map-card">
+          <div class="projects-map" id="projects-map" role="application" aria-label="Interaktive Karte der SHL Projekte"></div>
+          <div class="projects-map-fallback" id="projects-map-fallback" hidden>
+            Die Projektkarte konnte nicht geladen werden. Bitte pr&uuml;fe die Internetverbindung.
+          </div>
         </div>
       </div>
     </section>
   </div>
 
+  <div class="geo-project-modal" id="geo-project-modal" aria-hidden="true">
+    <div class="geo-project-modal-backdrop" id="geo-project-modal-backdrop"></div>
+    <article class="geo-project-modal-card" role="dialog" aria-modal="true" aria-labelledby="geo-project-modal-title">
+      <button class="geo-project-modal-close" id="geo-project-modal-close" type="button" aria-label="Projektfenster schliessen">x</button>
+      <img class="geo-project-modal-image" id="geo-project-modal-image" alt="">
+      <div class="geo-project-modal-body">
+        <p class="geo-project-modal-location" id="geo-project-modal-location"></p>
+        <h2 id="geo-project-modal-title"></h2>
+        <p class="geo-project-modal-text" id="geo-project-modal-text"></p>
+        <a class="geo-project-modal-link" id="geo-project-modal-link" target="_blank" rel="noopener">Mehr erfahren</a>
+      </div>
+    </article>
+  </div>
+
   <script src="data/interests.js"></script>
   <script src="data/jobs.js"></script>
   <script src="data/attributeLabels.js"></script>
+  <script src="data/projects.js?v=20260619-3"></script>
+  <script src="vendor/leaflet/leaflet.js"></script>
   <script src="js/app.js"></script>
   <script src="js/modal.js"></script>
   <script src="js/confetti.js"></script>
   <script src="js/matching.js"></script>
   <script src="js/job-details.js"></script>
+  <script src="js/job-finder.js?v=20260619-3"></script>
   <script src="js/swiping.js"></script>
   <script src="js/matchmaker.js"></script>
   <script src="js/job-swiper.js"></script>
-  <script src="js/geo-quiz.js"></script>
+  <script src="js/geo-quiz.js?v=20260619-5"></script>
+  <script src="js/projects-map.js"></script>
 </body>
 </html>
+
