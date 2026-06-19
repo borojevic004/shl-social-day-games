@@ -1,5 +1,3 @@
-/* Job Swiper */
-
 .home-menu-swiper {
   cursor: pointer;
   transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease;
@@ -292,7 +290,8 @@ body.job-swiper-active .app::after {
 
 .job-swiper-choice,
 .job-swiper-restart,
-.job-swiper-match-continue {
+.job-swiper-match-continue,
+.job-swiper-match-nearby {
   border: 0;
   font-family: "SHL Figtree", sans-serif;
   font-weight: 900;
@@ -342,12 +341,24 @@ body.job-swiper-active .app::after {
 }
 
 .job-swiper-restart,
-.job-swiper-match-continue {
+.job-swiper-match-continue,
+.job-swiper-match-nearby {
   padding: 11px 22px;
   border-radius: 999px;
+}
+
+.job-swiper-restart,
+.job-swiper-match-continue {
   background: var(--shl-rot);
   color: var(--shl-weiss);
   box-shadow: 0 4px 0 var(--shl-dunkelrot);
+}
+
+.job-swiper-match-nearby {
+  margin-top: 4px;
+  background: var(--shl-gelb);
+  color: var(--shl-dunkelblau);
+  box-shadow: 0 4px 0 var(--shl-dunkelgelb);
 }
 
 .job-swiper-match {
@@ -355,6 +366,11 @@ body.job-swiper-active .app::after {
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.job-swiper-match .job-finder-qr {
+  margin-top: 4px;
+  margin-bottom: 8px;
 }
 
 .job-swiper-match-kicker {
