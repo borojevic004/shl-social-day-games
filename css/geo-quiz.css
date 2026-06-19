@@ -1,5 +1,3 @@
-/* Geo Quiz */
-
 body.geo-quiz-active {
   padding: 12px;
   overflow: hidden;
@@ -102,6 +100,15 @@ body.geo-quiz-active .app {
   overflow: hidden;
   background: #000;
   box-shadow: 0 14px 30px rgba(38, 47, 94, 0.24);
+  touch-action: none;
+}
+
+.geo-quiz-map-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  will-change: transform;
 }
 
 #geo-quiz-map {
@@ -110,6 +117,118 @@ body.geo-quiz-active .app {
   min-height: 0;
   display: block;
   cursor: crosshair;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+.geo-project-markers {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: none;
+  pointer-events: none;
+}
+
+.geo-project-markers.is-visible {
+  display: block;
+}
+
+.geo-project-marker {
+  position: absolute;
+  pointer-events: auto;
+  width: calc(24px * var(--marker-scale, 1));
+  height: calc(24px * var(--marker-scale, 1));
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.geo-project-marker-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(16px * var(--marker-scale, 1));
+  height: calc(16px * var(--marker-scale, 1));
+  border: calc(3px * var(--marker-scale, 1)) solid var(--shl-weiss);
+  border-radius: 50% 50% 50% 0;
+  background: var(--shl-rot);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.38);
+  transform:
+    translate(-50%, -100%)
+    rotate(-45deg);
+  transform-origin: 50% 100%;
+  transition: transform 0.18s ease;
+}
+
+.geo-project-marker-pin::after {
+  content: "";
+  position: absolute;
+  width: calc(4px * var(--marker-scale, 1));
+  height: calc(4px * var(--marker-scale, 1));
+  top: calc(3px * var(--marker-scale, 1));
+  left: calc(3px * var(--marker-scale, 1));
+  border-radius: 50%;
+  background: var(--shl-weiss);
+}
+
+.geo-project-marker-label {
+  position: absolute;
+  left: -96px;
+  bottom: calc(34px * var(--marker-scale, 1));
+  width: 220px;
+  max-width: min(220px, 72vw);
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: var(--shl-dunkelblau);
+  color: var(--shl-weiss);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.2;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  transition: opacity 0.15s ease;
+}
+
+.geo-project-marker:hover .geo-project-marker-label,
+.geo-project-marker:focus .geo-project-marker-label {
+  opacity: 1;
+}
+
+.geo-zoom-controls {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 5;
+  display: none;
+  grid-template-columns: repeat(3, auto);
+  gap: 5px;
+}
+
+.geo-zoom-controls.is-visible {
+  display: grid;
+}
+
+.geo-zoom-controls button {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border: 2px solid var(--shl-weiss);
+  border-radius: 10px;
+  background: var(--shl-dunkelblau);
+  color: var(--shl-weiss);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.geo-quiz-map-wrap.is-zoomable {
+  cursor: grab;
+}
+
+.geo-quiz-map-wrap.is-dragging {
+  cursor: grabbing;
 }
 
 .geo-quiz-loading {
@@ -124,6 +243,104 @@ body.geo-quiz-active .app {
 
 .geo-quiz-loading.is-hidden {
   display: none;
+}
+
+.geo-project-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.geo-project-modal.is-visible {
+  display: flex;
+}
+
+.geo-project-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(37, 48, 95, 0.62);
+  backdrop-filter: blur(5px);
+}
+
+.geo-project-modal-card {
+  position: relative;
+  width: min(520px, 92vw);
+  max-height: min(86vh, 680px);
+  overflow: auto;
+  border-radius: 26px;
+  background: var(--shl-weiss);
+  box-shadow: 0 24px 70px rgba(18, 25, 60, 0.34);
+}
+
+.geo-project-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--shl-dunkelblau);
+  color: var(--shl-weiss);
+  font-size: 1.45rem;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.geo-project-modal-image {
+  width: 100%;
+  height: clamp(170px, 34vh, 260px);
+  display: block;
+  object-fit: cover;
+  background: linear-gradient(135deg, var(--shl-rosa), var(--shl-blau));
+}
+
+.geo-project-modal-body {
+  padding: 22px 24px 24px;
+}
+
+.geo-project-modal-location {
+  color: var(--shl-lila);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.geo-project-modal-card h2 {
+  margin-top: 8px;
+  color: var(--shl-dunkelblau);
+  font-family: "SHL Unbounded", sans-serif;
+  font-size: clamp(1.35rem, 3.2vw, 2rem);
+  line-height: 1.08;
+}
+
+.geo-project-modal-text {
+  margin-top: 12px;
+  color: var(--shl-dunkelblau);
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.geo-project-modal-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--shl-gelb);
+  color: var(--shl-dunkelblau);
+  font-weight: 900;
+  text-decoration: none;
+  box-shadow: 0 4px 0 #d7a400;
 }
 
 .geo-quiz-map-wrap.geo-quiz-wrong {
