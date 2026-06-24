@@ -62,7 +62,7 @@ body.home-active .app::after {
   margin-bottom: clamp(12px, 2vh, 24px);
   color: var(--shl-weiss);
   font-family: "SHL Unbounded", sans-serif;
-  font-size: clamp(1rem, 2.2vw, 1.8rem);
+  font-size: clamp(0.85rem, 1.37vw, 1.1rem);
   font-weight: 700;
 }
 
@@ -320,7 +320,7 @@ body.home-active .app::after {
   .home-domain {
     margin-top: -32px;
     margin-bottom: 8px;
-    font-size: clamp(0.88rem, 3.8vw, 1.35rem);
+    font-size: clamp(1.1rem, 3.7vw, 1.8rem);
   }
 
   .home-claim h1 {
@@ -422,7 +422,7 @@ body.home-active .app::after {
 
   .home-domain {
     margin-bottom: 7px;
-    font-size: clamp(0.78rem, 2.5vh, 1.15rem);
+    font-size: clamp(0.88rem, 3.8vw, 1.35rem);
   }
 
   .home-claim h1 {
