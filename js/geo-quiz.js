@@ -4,6 +4,7 @@ const SHLGeoQuiz = (() => {
     width: 1137,
     height: 840
   };
+  const MAX_ATTEMPTS_PER_COUNTRY = 3;
   const COLORS = {
     blue: [37, 48, 95],
     correct: [249, 215, 13],
@@ -218,6 +219,7 @@ const SHLGeoQuiz = (() => {
   const state = {
     order: [],
     currentIndex: 0,
+    attemptsLeft: MAX_ATTEMPTS_PER_COUNTRY,
     correct: new Set(),
     skipped: new Set(),
     masks: new Map(),
@@ -229,8 +231,24 @@ const SHLGeoQuiz = (() => {
     panX: 0,
     panY: 0,
     dragging: false,
+    pinching: false,
+    suppressClick: false,
+    activePointers: new Map(),
+    dragPointerId: null,
+    tapPointerId: null,
+    tapStartX: 0,
+    tapStartY: 0,
+    tapMoved: false,
     dragStartX: 0,
-    dragStartY: 0
+    dragStartY: 0,
+    dragOriginX: 0,
+    dragOriginY: 0,
+    pinchStartDistance: 0,
+    pinchStartZoom: 1,
+    pinchStartPanX: 0,
+    pinchStartPanY: 0,
+    pinchCenterX: 0,
+    pinchCenterY: 0
   };
 
   const els = {
@@ -319,13 +337,103 @@ const SHLGeoQuiz = (() => {
     applyMapTransform();
   }
 
-  function setZoom(nextZoom) {
-    state.zoom = Math.min(4, Math.max(1, Math.round(nextZoom)));
+  function setZoomAt(nextZoom, clientX, clientY) {
+    const rect = els.wrap.getBoundingClientRect();
+    const oldZoom = state.zoom;
+    const newZoom = Math.min(4, Math.max(1, nextZoom));
+    const centerX = els.wrap.clientWidth / 2;
+    const centerY = els.wrap.clientHeight / 2;
+    const pointX = typeof clientX === "number" ? clientX - rect.left : centerX;
+    const pointY = typeof clientY === "number" ? clientY - rect.top : centerY;
+    const relativeX = pointX - centerX;
+    const relativeY = pointY - centerY;
+    const zoomRatio = newZoom / oldZoom;
+
+    state.panX = relativeX - (relativeX - state.panX) * zoomRatio;
+    state.panY = relativeY - (relativeY - state.panY) * zoomRatio;
+    state.zoom = newZoom;
+
     if (state.zoom === 1) {
       state.panX = 0;
       state.panY = 0;
     }
     applyMapTransform();
+  }
+
+  function setZoom(nextZoom) {
+    setZoomAt(Math.round(nextZoom));
+  }
+
+  function distanceBetweenPointers(first, second) {
+    return Math.hypot(first.clientX - second.clientX, first.clientY - second.clientY);
+  }
+
+  function midpointBetweenPointers(first, second) {
+    return {
+      clientX: (first.clientX + second.clientX) / 2,
+      clientY: (first.clientY + second.clientY) / 2
+    };
+  }
+
+  function startPinchGesture() {
+    const pointers = [...state.activePointers.values()];
+    if (pointers.length < 2) return;
+
+    const [first, second] = pointers;
+    const midpoint = midpointBetweenPointers(first, second);
+    state.pinching = true;
+    state.dragging = false;
+    state.dragPointerId = null;
+    state.pinchStartDistance = distanceBetweenPointers(first, second);
+    state.pinchStartZoom = state.zoom;
+    state.pinchStartPanX = state.panX;
+    state.pinchStartPanY = state.panY;
+    state.pinchCenterX = midpoint.clientX;
+    state.pinchCenterY = midpoint.clientY;
+    els.wrap.classList.add("is-dragging");
+  }
+
+  function updatePinchGesture() {
+    const pointers = [...state.activePointers.values()];
+    if (pointers.length < 2 || !state.pinching) return;
+
+    const [first, second] = pointers;
+    const distance = distanceBetweenPointers(first, second);
+    if (!state.pinchStartDistance) return;
+
+    state.panX = state.pinchStartPanX;
+    state.panY = state.pinchStartPanY;
+    setZoomAt(
+      state.pinchStartZoom * (distance / state.pinchStartDistance),
+      state.pinchCenterX,
+      state.pinchCenterY
+    );
+    state.suppressClick = true;
+  }
+
+  function stopMapGesture(pointerId) {
+    state.activePointers.delete(pointerId);
+
+    if (state.activePointers.size < 2) {
+      state.pinching = false;
+    }
+
+    if (state.dragPointerId === pointerId || state.activePointers.size === 0) {
+      state.dragging = false;
+      state.dragPointerId = null;
+      els.wrap.classList.remove("is-dragging");
+    }
+
+    if (state.activePointers.size === 1 && state.zoom > 1) {
+      const pointer = [...state.activePointers.values()][0];
+      state.dragPointerId = pointer.pointerId;
+      state.dragging = true;
+      state.dragStartX = pointer.clientX - state.panX;
+      state.dragStartY = pointer.clientY - state.panY;
+      state.dragOriginX = pointer.clientX;
+      state.dragOriginY = pointer.clientY;
+      els.wrap.classList.add("is-dragging");
+    }
   }
 
   function openProjectModal(project) {
@@ -567,6 +675,12 @@ const SHLGeoQuiz = (() => {
     return state.order[state.currentIndex];
   }
 
+  function attemptsText() {
+    return state.attemptsLeft === 1
+      ? "1 Versuch übrig"
+      : `${state.attemptsLeft} Versuche übrig`;
+  }
+
   function setFeedback(message, type = "") {
     els.feedback.textContent = message;
     els.feedback.className = `geo-quiz-feedback${type ? ` is-${type}` : ""}`;
@@ -585,7 +699,7 @@ const SHLGeoQuiz = (() => {
     els.skip.textContent = "Überspringen";
     els.skip.className = "geo-quiz-skip";
     els.skip.onclick = skipCountry;
-    setFeedback("Tippe auf das richtige Land.");
+    setFeedback(`Tippe auf das richtige Land. ${attemptsText()}.`);
   }
 
   function isCurrentCountryHit(sourceX, sourceY) {
@@ -608,16 +722,35 @@ const SHLGeoQuiz = (() => {
 
   function advance() {
     state.currentIndex++;
+    state.attemptsLeft = MAX_ATTEMPTS_PER_COUNTRY;
     state.locked = false;
     renderQuestion();
   }
 
-  function handleMapClick(event) {
+  function missCurrentCountry() {
+    state.attemptsLeft--;
+    els.wrap.classList.remove("geo-quiz-wrong");
+    void els.wrap.offsetWidth;
+    els.wrap.classList.add("geo-quiz-wrong");
+
+    if (state.attemptsLeft <= 0) {
+      const country = currentCountry();
+      state.locked = true;
+      state.skipped.add(country.id);
+      setFeedback(`${country.name} wurde übersprungen. Nächstes Land kommt gleich.`, "wrong");
+      window.setTimeout(advance, 850);
+      return;
+    }
+
+    setFeedback(`Noch nicht ganz. ${attemptsText()}.`, "wrong");
+  }
+
+  function handleMapSelection(clientX, clientY) {
     if (!state.ready || state.locked || state.currentIndex >= state.order.length) return;
 
     const rect = els.canvas.getBoundingClientRect();
-    const sourceX = ((event.clientX - rect.left) / rect.width) * state.sourceImageData.width;
-    const sourceY = ((event.clientY - rect.top) / rect.height) * state.sourceImageData.height;
+    const sourceX = ((clientX - rect.left) / rect.width) * state.sourceImageData.width;
+    const sourceY = ((clientY - rect.top) / rect.height) * state.sourceImageData.height;
     const country = currentCountry();
 
     if (isCurrentCountryHit(sourceX, sourceY)) {
@@ -629,16 +762,31 @@ const SHLGeoQuiz = (() => {
       return;
     }
 
-    setFeedback("Noch nicht ganz. Versuch es noch einmal oder überspringe.", "wrong");
-    els.wrap.classList.remove("geo-quiz-wrong");
-    void els.wrap.offsetWidth;
-    els.wrap.classList.add("geo-quiz-wrong");
+    missCurrentCountry();
+  }
+
+  function handleMapClick(event) {
+    if (state.suppressClick) {
+      state.suppressClick = false;
+      return;
+    }
+
+    handleMapSelection(event.clientX, event.clientY);
+  }
+
+  function isPointInsideMap(clientX, clientY) {
+    const rect = els.canvas.getBoundingClientRect();
+    return clientX >= rect.left &&
+      clientX <= rect.right &&
+      clientY >= rect.top &&
+      clientY <= rect.bottom;
   }
 
   function skipCountry() {
     if (state.locked || state.currentIndex >= state.order.length) return;
     state.skipped.add(currentCountry().id);
     state.currentIndex++;
+    state.attemptsLeft = MAX_ATTEMPTS_PER_COUNTRY;
     renderQuestion();
   }
 
@@ -671,6 +819,7 @@ const SHLGeoQuiz = (() => {
     state.currentIndex = 0;
     state.correct = new Set();
     state.skipped = new Set();
+    state.attemptsLeft = MAX_ATTEMPTS_PER_COUNTRY;
     state.locked = false;
     renderMap();
     renderQuestion();
@@ -729,30 +878,102 @@ const SHLGeoQuiz = (() => {
       }
     });
     els.wrap.addEventListener("pointerdown", (event) => {
-      if (!state.projectsVisible || state.zoom === 1) return;
+      if (!state.ready || event.button > 0) return;
+      state.activePointers.set(event.pointerId, event);
+      els.wrap.setPointerCapture(event.pointerId);
+
+      if (state.activePointers.size >= 2) {
+        event.preventDefault();
+        state.suppressClick = true;
+        state.tapMoved = true;
+        startPinchGesture();
+        return;
+      }
+
+      state.tapPointerId = event.pointerId;
+      state.tapStartX = event.clientX;
+      state.tapStartY = event.clientY;
+      state.tapMoved = false;
+
+      if (state.zoom === 1) return;
+      state.dragPointerId = event.pointerId;
       state.dragging = true;
       state.dragStartX = event.clientX - state.panX;
       state.dragStartY = event.clientY - state.panY;
+      state.dragOriginX = event.clientX;
+      state.dragOriginY = event.clientY;
       els.wrap.classList.add("is-dragging");
-      els.wrap.setPointerCapture(event.pointerId);
     });
     els.wrap.addEventListener("pointermove", (event) => {
-      if (!state.dragging) return;
+      if (!state.activePointers.has(event.pointerId)) return;
+      state.activePointers.set(event.pointerId, event);
+
+      if (state.activePointers.size >= 2) {
+        event.preventDefault();
+        state.tapMoved = true;
+        updatePinchGesture();
+        return;
+      }
+
+      if (
+        state.tapPointerId === event.pointerId &&
+        Math.hypot(event.clientX - state.tapStartX, event.clientY - state.tapStartY) > 6
+      ) {
+        state.tapMoved = true;
+      }
+
+      if (!state.dragging || state.dragPointerId !== event.pointerId) return;
       state.panX = event.clientX - state.dragStartX;
       state.panY = event.clientY - state.dragStartY;
+      if (Math.hypot(event.clientX - state.dragOriginX, event.clientY - state.dragOriginY) > 6) {
+        state.suppressClick = true;
+        state.tapMoved = true;
+      }
       applyMapTransform();
     });
     els.wrap.addEventListener("pointerup", (event) => {
-      state.dragging = false;
-      els.wrap.classList.remove("is-dragging");
+      const shouldSelect =
+        state.tapPointerId === event.pointerId &&
+        !state.tapMoved &&
+        !state.pinching &&
+        isPointInsideMap(event.clientX, event.clientY);
+
+      stopMapGesture(event.pointerId);
       if (els.wrap.hasPointerCapture(event.pointerId)) {
         els.wrap.releasePointerCapture(event.pointerId);
       }
+
+      if (shouldSelect) {
+        state.suppressClick = true;
+        handleMapSelection(event.clientX, event.clientY);
+      }
+
+      if (state.tapPointerId === event.pointerId) {
+        state.tapPointerId = null;
+        state.tapMoved = false;
+      }
+    });
+    els.wrap.addEventListener("pointercancel", (event) => {
+      stopMapGesture(event.pointerId);
+      if (els.wrap.hasPointerCapture(event.pointerId)) {
+        els.wrap.releasePointerCapture(event.pointerId);
+      }
+      if (state.tapPointerId === event.pointerId) {
+        state.tapPointerId = null;
+        state.tapMoved = false;
+      }
+    });
+    els.wrap.addEventListener("lostpointercapture", (event) => {
+      stopMapGesture(event.pointerId);
+      if (state.tapPointerId === event.pointerId) {
+        state.tapPointerId = null;
+        state.tapMoved = false;
+      }
     });
     els.wrap.addEventListener("wheel", (event) => {
-      if (!state.projectsVisible) return;
+      if (!state.ready) return;
       event.preventDefault();
-      setZoom(state.zoom + (event.deltaY < 0 ? 1 : -1));
+      setZoomAt(state.zoom + (event.deltaY < 0 ? 1 : -1), event.clientX, event.clientY);
     }, { passive: false });
     window.addEventListener("resize", applyMapTransform);
     SHLApp.onStartGeoQuiz(() => {
