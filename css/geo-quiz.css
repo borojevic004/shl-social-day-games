@@ -1,0 +1,520 @@
+/* Geo Quiz */
+
+body.geo-quiz-active {
+  padding: 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(136, 156, 255, 0.9), transparent 38%),
+    linear-gradient(135deg, var(--shl-dunkelblau), var(--shl-blau));
+}
+
+body.geo-quiz-active .app {
+  width: min(1180px, calc(100vw - 24px));
+  max-width: 1180px;
+  height: calc(100dvh - 24px);
+  min-height: min(720px, calc(100dvh - 24px));
+  max-height: calc(100dvh - 24px);
+  padding: 18px 22px 22px;
+  overflow: hidden;
+}
+
+.geo-quiz-screen {
+  display: none;
+  position: relative;
+  height: 100%;
+}
+
+.geo-quiz-screen.screen-active {
+  display: block;
+}
+
+.geo-quiz-back-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: var(--shl-dunkelblau);
+  color: var(--shl-weiss);
+  box-shadow: 0 3px 0 var(--shl-blau);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.geo-quiz-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.geo-quiz-header {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+.geo-quiz-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: var(--shl-gelb);
+  color: var(--shl-dunkelblau);
+  font-family: "SHL Unbounded", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.geo-quiz-header h1 {
+  margin-top: 7px;
+  color: var(--shl-blau);
+  font-size: clamp(1.7rem, 4vw, 2.7rem);
+}
+
+.geo-quiz-header p {
+  margin-top: 3px;
+  color: var(--shl-dunkelblau);
+}
+
+.geo-quiz-layout {
+  min-height: 0;
+  flex: 1;
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 300px);
+  gap: 18px;
+  align-items: center;
+  grid-template-rows: minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.geo-quiz-map-wrap {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  max-height: 590px;
+  aspect-ratio: var(--geo-map-ratio, 1137 / 840);
+  justify-self: center;
+  border: 7px solid var(--shl-weiss);
+  border-radius: 22px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 14px 30px rgba(38, 47, 94, 0.24);
+  touch-action: none;
+}
+
+.geo-quiz-map-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+#geo-quiz-map {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: block;
+  cursor: crosshair;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+.geo-project-markers {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: none;
+  pointer-events: none;
+}
+
+.geo-project-markers.is-visible {
+  display: block;
+}
+
+.geo-project-marker {
+  position: absolute;
+  pointer-events: auto;
+  width: calc(24px * var(--marker-scale, 1));
+  height: calc(24px * var(--marker-scale, 1));
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.geo-project-marker-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(16px * var(--marker-scale, 1));
+  height: calc(16px * var(--marker-scale, 1));
+  border: calc(3px * var(--marker-scale, 1)) solid var(--shl-weiss);
+  border-radius: 50% 50% 50% 0;
+  background: var(--shl-rot);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.38);
+  transform:
+    translate(-50%, -100%)
+    rotate(-45deg);
+  transform-origin: 50% 100%;
+  transition: transform 0.18s ease;
+}
+
+.geo-project-marker-pin::after {
+  content: "";
+  position: absolute;
+  width: calc(4px * var(--marker-scale, 1));
+  height: calc(4px * var(--marker-scale, 1));
+  top: calc(3px * var(--marker-scale, 1));
+  left: calc(3px * var(--marker-scale, 1));
+  border-radius: 50%;
+  background: var(--shl-weiss);
+}
+
+.geo-project-marker-label {
+  position: absolute;
+  left: -96px;
+  bottom: calc(34px * var(--marker-scale, 1));
+  width: 220px;
+  max-width: min(220px, 72vw);
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: var(--shl-dunkelblau);
+  color: var(--shl-weiss);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.2;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  transition: opacity 0.15s ease;
+}
+
+.geo-project-marker:hover .geo-project-marker-label,
+.geo-project-marker:focus .geo-project-marker-label {
+  opacity: 1;
+}
+
+.geo-zoom-controls {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 5;
+  display: none;
+  grid-template-columns: repeat(3, auto);
+  gap: 5px;
+}
+
+.geo-zoom-controls.is-visible {
+  display: grid;
+}
+
+.geo-zoom-controls button {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border: 2px solid var(--shl-weiss);
+  border-radius: 10px;
+  background: var(--shl-dunkelblau);
+  color: var(--shl-weiss);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.geo-quiz-map-wrap.is-zoomable {
+  cursor: grab;
+}
+
+.geo-quiz-map-wrap.is-dragging {
+  cursor: grabbing;
+}
+
+.geo-quiz-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--shl-dunkelblau);
+  color: var(--shl-weiss);
+  font-weight: 900;
+}
+
+.geo-quiz-loading.is-hidden {
+  display: none;
+}
+
+.geo-project-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.geo-project-modal.is-visible {
+  display: flex;
+}
+
+.geo-project-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(37, 48, 95, 0.62);
+  backdrop-filter: blur(5px);
+}
+
+.geo-project-modal-card {
+  position: relative;
+  width: min(520px, 92vw);
+  max-height: min(86vh, 680px);
+  overflow: auto;
+  border-radius: 26px;
+  background: var(--shl-weiss);
+  box-shadow: 0 24px 70px rgba(18, 25, 60, 0.34);
+}
+
+.geo-project-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--shl-dunkelblau);
+  color: var(--shl-weiss);
+  font-size: 1.45rem;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.geo-project-modal-image {
+  width: 100%;
+  height: clamp(170px, 34vh, 260px);
+  display: block;
+  object-fit: cover;
+  background: linear-gradient(135deg, var(--shl-rosa), var(--shl-blau));
+}
+
+.geo-project-modal-body {
+  padding: 22px 24px 24px;
+}
+
+.geo-project-modal-location {
+  color: var(--shl-lila);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.geo-project-modal-card h2 {
+  margin-top: 8px;
+  color: var(--shl-dunkelblau);
+  font-family: "SHL Unbounded", sans-serif;
+  font-size: clamp(1.35rem, 3.2vw, 2rem);
+  line-height: 1.08;
+}
+
+.geo-project-modal-text {
+  margin-top: 12px;
+  color: var(--shl-dunkelblau);
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.geo-project-modal-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--shl-gelb);
+  color: var(--shl-dunkelblau);
+  font-weight: 900;
+  text-decoration: none;
+  box-shadow: 0 4px 0 #d7a400;
+}
+
+.geo-quiz-map-wrap.geo-quiz-wrong {
+  animation: geo-quiz-shake 0.3s ease;
+}
+
+@keyframes geo-quiz-shake {
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.geo-quiz-card {
+  padding: 24px 20px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #ffffff, #f3f5ff);
+  box-shadow: 0 12px 28px rgba(38, 47, 94, 0.18);
+  text-align: center;
+}
+
+.geo-quiz-progress {
+  color: var(--shl-blau);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.geo-quiz-question {
+  margin-top: 20px;
+  color: var(--shl-dunkelblau);
+  font-weight: 800;
+}
+
+.geo-quiz-card h2 {
+  margin-top: 5px;
+  color: var(--shl-rot);
+  font-family: "SHL Unbounded", sans-serif;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.15;
+}
+
+.geo-quiz-feedback {
+  min-height: 3.2em;
+  margin-top: 18px;
+  color: var(--shl-dunkelblau);
+  line-height: 1.35;
+}
+
+.geo-quiz-feedback.is-correct {
+  color: #6b9b00;
+}
+
+.geo-quiz-feedback.is-wrong {
+  color: var(--shl-dunkelrot);
+}
+
+.geo-quiz-skip,
+.geo-quiz-restart {
+  margin-top: 18px;
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 22px;
+  background: var(--shl-gelb);
+  color: var(--shl-dunkelblau);
+  box-shadow: 0 4px 0 var(--shl-dunkelgelb);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.geo-quiz-legend {
+  margin-top: 18px;
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  font-size: 0.8rem;
+}
+
+.geo-quiz-legend span::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  margin-right: 8px;
+  display: inline-block;
+  border-radius: 4px;
+  vertical-align: -2px;
+  background: var(--legend-color);
+}
+
+@media (orientation: portrait) {
+  body.geo-quiz-active {
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  body.geo-quiz-active .app {
+    width: calc(100vw - 20px);
+    height: auto;
+    max-height: none;
+    min-height: calc(100dvh - 20px);
+    padding: 16px 14px 20px;
+  }
+
+  .geo-quiz-back-btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .geo-quiz-back-label {
+    display: none;
+  }
+
+  .geo-quiz-header {
+    padding-inline: 34px;
+  }
+
+  .geo-quiz-layout {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: visible;
+  }
+
+  .geo-quiz-map-wrap {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: var(--geo-map-ratio, 1137 / 840);
+  }
+
+  .geo-quiz-card {
+    width: 100%;
+    padding: 15px 16px;
+  }
+
+  .geo-quiz-question,
+  .geo-quiz-feedback,
+  .geo-quiz-skip,
+  .geo-quiz-restart {
+    margin-top: 9px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  body.geo-quiz-active .app {
+    padding: 10px 16px 12px;
+  }
+
+  .geo-quiz-header h1 {
+    margin-top: 2px;
+    font-size: 1.5rem;
+  }
+
+  .geo-quiz-header p {
+    font-size: 0.76rem;
+  }
+
+  .geo-quiz-layout {
+    margin-top: 7px;
+    grid-template-columns: minmax(0, 1fr) 230px;
+    gap: 12px;
+  }
+
+  .geo-quiz-card {
+    padding: 15px 14px;
+  }
+
+  .geo-quiz-question,
+  .geo-quiz-feedback,
+  .geo-quiz-skip,
+  .geo-quiz-restart {
+    margin-top: 9px;
+  }
+}
