@@ -54,5 +54,5 @@ const attributeLabels = {
   technology: "Computer",
   tools: "Werkzeug",
   youth: "Jugendliche",
-  hospitality: "Gäste"
+  hospitality: "Gäste!"
 };
