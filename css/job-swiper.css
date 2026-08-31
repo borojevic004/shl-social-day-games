@@ -372,10 +372,9 @@ body.job-swiper-active .app::after {
   width: min(100%, 520px);
 }
 
-.job-swiper-match-actions .job-finder-button,
 .job-swiper-match-actions .job-swiper-match-continue {
-  flex: 1;
-  min-width: 0;
+  flex: 0 1 320px;
+  min-width: 190px;
 }
 
 .job-swiper-match {
@@ -641,8 +640,8 @@ body.job-swiper-active .app::after {
   }
 
   .job-swiper-match-actions {
-    justify-self: start;
-    width: min(100%, 430px);
+    justify-self: center;
+    width: min(100%, 320px);
   }
 
   .job-swiper-match-continue,

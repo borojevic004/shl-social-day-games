@@ -2,9 +2,10 @@ const interests = [
   {
     id: "action",
     emoji: "🚒",
-    text: "Blaulicht & Action",
-    description: "Du magst es spannend, bist gerne in Bewegung und findest Feuerwehr, Rettung oder Klettern interessant.",
-    weights: {
+    text: "Action & Blaulicht",
+    description: "Du magst Bewegung, schnelle Aufgaben und Einsätze mit Feuerwehr oder Rettungsdienst.",
+    weights: 
+    {
       action: 5,
       safety: 4,
       teamwork: 3,
@@ -18,8 +19,9 @@ const interests = [
     id: "helping_people",
     emoji: "🤝",
     text: "Menschen helfen",
-    description: "Du bist hilfsbereit, hörst gut zu und möchtest anderen Menschen den Tag ein bisschen leichter machen.",
-    weights: {
+    description: "Du hilfst anderen gern, hörst gut zu und möchtest, dass es ihnen besser geht.",
+    weights: 
+    {
       people: 5,
       care: 5,
       support: 4,
@@ -33,8 +35,9 @@ const interests = [
     id: "creative",
     emoji: "🎨",
     text: "Kreativ sein",
-    description: "Du gestaltest gerne, hast viele Ideen und magst Aufgaben mit Farben, Fotos, Deko, Medien oder Design.",
-    weights: {
+    description: "Du hast viele kreative Ideen und magst Malen, Gestalten, Deko oder Design.",
+    weights: 
+    {
       creative: 5,
       design: 4,
       media: 3,
@@ -48,8 +51,9 @@ const interests = [
     id: "animals",
     emoji: "🐶",
     text: "Mit Tieren arbeiten",
-    description: "Du magst Tiere, bist geduldig und kannst dir vorstellen, beim Füttern, Pflegen oder Saubermachen zu helfen.",
-    weights: {
+    description: "Du magst Tiere und hilfst gern beim Füttern, Pflegen oder Saubermachen.",
+    weights: 
+    {
       animals: 5,
       care: 4,
       patience: 3,
@@ -63,8 +67,9 @@ const interests = [
     id: "outdoor",
     emoji: "🌳",
     text: "Draußen arbeiten",
-    description: "Du bist gerne an der frischen Luft, bewegst dich gern und hast kein Problem damit, auch mal anzupacken.",
-    weights: {
+    description: "Du bist gern draußen an der frischen Luft, bewegst dich viel und packst gerne mit an.",
+    weights: 
+    {
       outdoor: 5,
       nature: 5,
       physical: 4,
@@ -77,9 +82,10 @@ const interests = [
   {
     id: "food",
     emoji: "🍕",
-    text: "Essen & Gastro",
-    description: "Du findest Essen, Backen oder Getränke spannend und kannst dir vorstellen, in Café, Küche, Bäckerei oder Imbiss mitzuhelfen.",
-    weights: {
+    text: "Essen & Café",
+    description: "Du findest Essen, Backen oder Getränke spannend und hilfst gern in Küche, Café oder Bäckerei mit.",
+    weights: 
+    {
       food: 5,
       hygiene: 5,
       service: 4,
@@ -94,8 +100,9 @@ const interests = [
     id: "technology",
     emoji: "💻",
     text: "Computer & Technik",
-    description: "Du interessierst dich für Computer, Geräte, Webseiten oder Technik und arbeitest gerne genau und konzentriert.",
-    weights: {
+    description: "Du magst Computer, Geräte oder Webseiten und löst gern kleine Technik-Probleme.",
+    weights: 
+    {
       technology: 5,
       technical: 4,
       detail: 3,
@@ -108,9 +115,10 @@ const interests = [
   {
     id: "quiet",
     emoji: "📚",
-    text: "Bibliothek & Ruhe",
-    description: "Du magst ruhige Orte, arbeitest gerne ordentlich und findest Bücher, Sortieren oder konzentrierte Aufgaben gut.",
-    weights: {
+    text: "Ruhe & Bücher",
+    description: "Du magst ruhige Orte, Bücher und Sortieren und arbeitest gern ordentlich und konzentriert.",
+    weights: 
+    {
       quiet: 5,
       organization: 5,
       detail: 4,
@@ -125,7 +133,8 @@ const interests = [
     emoji: "👶",
     text: "Kinder & Schule",
     description: "Du kommst gut mit jüngeren Kindern klar und hast Lust, beim Spielen, Basteln, Lernen oder Vorlesen zu helfen.",
-    weights: {
+    weights: 
+    {
       children: 5,
       education: 5,
       care: 4,
@@ -139,8 +148,9 @@ const interests = [
     id: "organization",
     emoji: "🧾",
     text: "Ordnung & Organisation",
-    description: "Du behältst gerne den Überblick, sortierst ordentlich und findest Planen, Vorbereiten oder Listen nicht langweilig.",
-    weights: {
+    description: "Du behältst gern den Überblick, sortierst ordentlich und findest Planen oder Listen gut.",
+    weights: 
+    {
       organization: 5,
       detail: 4,
       office: 3,
@@ -154,8 +164,9 @@ const interests = [
     id: "physical_work",
     emoji: "📦",
     text: "Lager & Anpacken",
-    description: "Du packst gerne mit an, bewegst dich lieber als lange zu sitzen und findest Kisten, Aufbau oder Werkstatt spannend.",
-    weights: {
+    description: "Du packst gern mit an, bewegst dich viel und findest Kisten, Aufbau oder Ordnung spannend.",
+    weights: 
+    {
       physical: 5,
       logistics: 4,
       cleaning: 3,
@@ -168,9 +179,10 @@ const interests = [
   {
     id: "sales_service",
     emoji: "🛒",
-    text: "Verkauf & Kundenkontakt",
-    description: "Du bist freundlich, traust dich mit Kund*innen zu sprechen und kannst dir Verkauf, Beratung oder Bedienen gut vorstellen.",
-    weights: {
+    text: "Verkauf & Kontakt",
+    description: "Du bist freundlich, sprichst gern mit Menschen und kannst dir Beraten oder Bedienen gut vorstellen.",
+    weights: 
+    {
       sales: 5,
       service: 5,
       customerContact: 5,
@@ -183,9 +195,10 @@ const interests = [
   {
     id: "cleaning_preparation",
     emoji: "🧼",
-    text: "Sauberkeit & Vorbereitung",
-    description: "Du findest es okay, aufzuräumen, vorzubereiten und dafür zu sorgen, dass alles sauber und bereit ist.",
-    weights: {
+    text: "Sauber machen & Vorbereitung",
+    description: "Du räumst gern auf, bereitest Dinge vor und sorgst dafür, dass alles sauber und bereit ist.",
+    weights: 
+    {
       cleaning: 5,
       hygiene: 4,
       preparation: 4,
@@ -198,9 +211,10 @@ const interests = [
   {
     id: "health",
     emoji: "⚕️",
-    text: "Gesundheit & Praxis",
-    description: "Du interessierst dich dafür, wie Menschen oder Tiere behandelt, gepflegt oder gesund gehalten werden.",
-    weights: {
+    text: "Gesundheit",
+    description: "Du möchtest wissen, wie man Menschen oder Tieren hilft, sie pflegt und gesund hält.",
+    weights: 
+    {
       health: 5,
       care: 4,
       support: 4,
@@ -214,8 +228,9 @@ const interests = [
     id: "sport_active",
     emoji: "🏃",
     text: "Sport & Bewegung",
-    description: "Du bist gerne aktiv, magst Bewegung und findest Sport, Schwimmbad, Klettern oder körperliche Aufgaben interessant.",
-    weights: {
+    description: "Du bist gern aktiv, magst Bewegung und findest Sport, Schwimmen oder Klettern spannend.",
+    weights: 
+    {
       sport: 5,
       active: 5,
       physical: 4,
@@ -229,8 +244,9 @@ const interests = [
     id: "culture_museum",
     emoji: "🎭",
     text: "Kultur & Museum",
-    description: "Du magst Theater, Museen, Ausstellungen oder spannende Geschichten und erklärst anderen gerne etwas.",
-    weights: {
+    description: "Du magst Theater, Museen oder spannende Geschichten und redest gern mit anderen darüber.",
+    weights: 
+    {
       culture: 5,
       museum: 4,
       education: 3,
@@ -243,9 +259,10 @@ const interests = [
   {
     id: "entertainment",
     emoji: "🎬",
-    text: "Freizeit & Entertainment",
-    description: "Du magst Orte, an denen viel los ist, zum Beispiel Kino, Freizeitpark oder Theater, und hast Spaß am Kontakt mit Gästen.",
-    weights: {
+    text: "Freizeit & Spaß",
+    description: "Du magst Orte, an denen viel los ist, zum Beispiel Kino, Freizeitpark oder Theater und hast Spaß am Kontakt mit Gästen.",
+    weights: 
+    {
       entertainment: 5,
       fun: 5,
       service: 4,
@@ -258,9 +275,10 @@ const interests = [
   {
     id: "media",
     emoji: "📻",
-    text: "Medien & Kommunikation",
-    description: "Du schreibst, fotografierst, filmst oder postest gerne und findest Medien, Radio, Videos oder Social Media spannend.",
-    weights: {
+    text: "Medien & Social Media",
+    description: "Du fotografierst, filmst, schreibst oder postest gern und findest Social Media spannend.",
+    weights: 
+    {
       media: 5,
       communication: 5,
       creative: 4,
@@ -275,7 +293,8 @@ const interests = [
     emoji: "🌷",
     text: "Pflanzen & Natur",
     description: "Du magst Pflanzen, Blumen, Obst oder Gartenarbeit und bist gerne draußen oder in der Natur.",
-    weights: {
+    weights: 
+    {
       plants: 5,
       nature: 5,
       outdoor: 4,
@@ -288,9 +307,10 @@ const interests = [
   {
     id: "administration",
     emoji: "🏛️",
-    text: "Verwaltung & Rathaus",
-    description: "Du arbeitest gerne ordentlich, findest Büroaufgaben interessant und möchtest wissen, wie Rathaus oder Verwaltung funktionieren.",
-    weights: {
+    text: "Büro & Verwaltung",
+    description: "Du arbeitest gern ordentlich, sortierst Dinge und findest Aufgaben im Büro interessant.",
+    weights: 
+    {
       administration: 5,
       office: 5,
       organization: 4,
@@ -304,8 +324,9 @@ const interests = [
     id: "youth_projects",
     emoji: "🧑‍🤝‍🧑",
     text: "Jugend & Projekte",
-    description: "Du arbeitest gerne mit anderen Jugendlichen oder Kindern zusammen und hast Lust auf Aktionen, Spiele oder Projekte.",
-    weights: {
+    description: "Du arbeitest gerne mit anderen Jugendlichen oder Kindern zusammen und hast Lust auf Spiele oder gemeinsame Projekte.",
+    weights: 
+    {
       youth: 5,
       people: 4,
       teamwork: 4,
@@ -318,9 +339,10 @@ const interests = [
   {
     id: "technical_practical",
     emoji: "🔧",
-    text: "Technisch & praktisch",
-    description: "Du möchtest Dinge ausprobieren, reparieren oder mit Werkzeug arbeiten, zum Beispiel an Fahrrad, Auto, Holz oder Technik.",
-    weights: {
+    text: "Technik & Werkzeug",
+    description: "Du probierst gern Dinge aus und arbeitest gern mit Werkzeug, Holz oder Technik.",
+    weights: 
+    {
       technical: 5,
       tools: 5,
       repair: 4,
@@ -333,9 +355,10 @@ const interests = [
   {
     id: "support",
     emoji: "🛟",
-    text: "Support & Helfen",
-    description: "Du erklärst gerne Dinge, bleibst ruhig bei Fragen und hilfst anderen, wenn sie nicht weiterkommen.",
-    weights: {
+    text: "Erklären & Helfen",
+    description: "Du erklärst gerne Dinge und hilfst anderen, wenn sie nicht weiterkommen.",
+    weights: 
+    {
       support: 5,
       patience: 4,
       communication: 4,

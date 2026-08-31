@@ -45,7 +45,7 @@ const SHLJobSwiper = (() => {
   function renderJob() {
     if (!state.roundActive) return;
     if (state.currentIndex >= state.jobs.length) {
-      renderFinished();
+      reshuffleDeck();
       return;
     }
 
@@ -135,18 +135,15 @@ const SHLJobSwiper = (() => {
           ${imageHtml(job, "job-swiper-match-image")}
         </div>
         <h2>${displayTitle(job.title)}</h2>
-        <p>${job.group}</p>
         <span>Du hast deinen Job gefunden! Starte eine neue Runde und entdecke die Jobs in einer neuen Reihenfolge.</span>
         ${SHLJobFinder.qrHtml(job)}
         <div class="job-swiper-match-actions">
-          ${SHLJobFinder.buttonHtml(job, "job-swiper-match-nearby")}
           <button class="job-swiper-match-continue" id="job-swiper-match-continue" type="button">
             Nochmal spielen
           </button>
         </div>
       </div>
     `, (content) => {
-      SHLJobFinder.bindButtons(content);
       content.querySelector("#job-swiper-match-continue").onclick = startRound;
       content.querySelector("#job-swiper-match-close").onclick = SHLModal.close;
     }, { dismissible: false });
@@ -181,6 +178,18 @@ const SHLJobSwiper = (() => {
     }
 
     state.currentIndex++;
+    renderJob();
+  }
+
+  function reshuffleDeck() {
+    if (!jobs.length) {
+      renderFinished();
+      return;
+    }
+
+    state.jobs = shuffle(jobs);
+    state.currentIndex = 0;
+    state.likedJobs = [];
     renderJob();
   }
 

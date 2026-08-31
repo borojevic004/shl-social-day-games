@@ -1,7 +1,10 @@
 const SHLJobFinder = (() => {
-  // When the page is online, set this to the public page URL, for example:
-  // "https://socialday.de/job-finder"
-  const PUBLIC_JOB_FINDER_URL = "http://192.168.178.179:8000/index.html";
+  // Optional: set this only if QR codes should always point to one fixed public URL.
+  // Otherwise the QR code uses the URL where the page is currently opened
+  // (for example your GitHub Pages URL).
+  const PUBLIC_JOB_FINDER_URL = "https://borojevic004.github.io/shl-social-day-games/";
+  const LOCAL_PREVIEW_HOST = "192.168.1.249";
+  const LOCAL_PREVIEW_PORT = "8000";
 
   const titleSearchTerms = {
     "erzieher-in-im-kindergarten": "Kindergarten in der Nähe",
@@ -138,6 +141,19 @@ const SHLJobFinder = (() => {
 
   function getBaseUrl() {
     if (PUBLIC_JOB_FINDER_URL) return PUBLIC_JOB_FINDER_URL;
+
+    const { protocol, hostname, port, pathname } = window.location;
+    const isLocalFile = protocol === "file:";
+    const isLocalHost = hostname === "localhost" || hostname === "127.0.0.1";
+
+    if (isLocalFile) {
+      return `http://${LOCAL_PREVIEW_HOST}:${LOCAL_PREVIEW_PORT}/index.html`;
+    }
+
+    if (isLocalHost && LOCAL_PREVIEW_HOST) {
+      const previewPort = port || LOCAL_PREVIEW_PORT;
+      return `${protocol}//${LOCAL_PREVIEW_HOST}:${previewPort}${pathname}`;
+    }
 
     return `${window.location.origin}${window.location.pathname}`;
   }

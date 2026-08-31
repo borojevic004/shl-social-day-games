@@ -4,7 +4,8 @@ const jobsRaw = [
     title: "Erzieher*in im Kindergarten",
     group: "Soziales, Bildung & Betreuung",
     image: "images/kindergarten_teacher.jpg",
-    weights: {
+    weights: 
+    {
       children: 5,
       care: 5,
       education: 4,
@@ -24,7 +25,8 @@ const jobsRaw = [
     title: "Grundschullehrer*in",
     group: "Soziales, Bildung & Betreuung",
     image: "images/primary_school_teacher.jpg",
-    weights: {
+    weights: 
+    {
       children: 5,
       education: 5,
       patience: 4,
@@ -44,7 +46,8 @@ const jobsRaw = [
     title: "Schulsozialarbeiter*in",
     group: "Soziales, Bildung & Betreuung",
     image: "images/school_social_worker.jpg",
-    weights: {
+    weights: 
+    {
       children: 4,
       youth: 5,
       people: 5,
@@ -64,7 +67,8 @@ const jobsRaw = [
     title: "Altenpfleger*in",
     group: "Soziales, Bildung & Betreuung",
     image: "images/elderly_care_worker.jpg",
-    weights: {
+    weights: 
+    {
       seniors: 5,
       care: 5,
       health: 4,
@@ -84,7 +88,8 @@ const jobsRaw = [
     title: "Pflegehelfer*in",
     group: "Soziales, Bildung & Betreuung",
     image: "images/care_assistant.jpg",
-    weights: {
+    weights: 
+    {
       care: 5,
       health: 4,
       people: 4,
@@ -104,7 +109,8 @@ const jobsRaw = [
     title: "Jugendgruppenleiter*in",
     group: "Soziales, Bildung & Betreuung",
     image: "images/youth_group_leader.jpg",
-    weights: {
+    weights: 
+    {
       youth: 5,
       children: 3,
       people: 5,
@@ -124,7 +130,8 @@ const jobsRaw = [
     title: "Sozialarbeiter*in",
     group: "Soziales, Bildung & Betreuung",
     image: "images/social_worker.jpg",
-    weights: {
+    weights: 
+    {
       people: 5,
       care: 5,
       support: 5,
@@ -144,7 +151,8 @@ const jobsRaw = [
     title: "Ergotherapeut*in",
     group: "Soziales, Bildung & Betreuung",
     image: "images/occupational_therapist.jpg",
-    weights: {
+    weights: 
+    {
       health: 5,
       care: 4,
       support: 5,
@@ -164,7 +172,8 @@ const jobsRaw = [
     title: "Physiotherapeut*in",
     group: "Soziales, Bildung & Betreuung",
     image: "images/physiotherapist.jpg",
-    weights: {
+    weights: 
+    {
       health: 5,
       sport: 4,
       active: 4,
@@ -184,7 +193,8 @@ const jobsRaw = [
     title: "Rettungssanitäter*in",
     group: "Soziales, Bildung & Betreuung",
     image: "images/paramedic.jpg",
-    weights: {
+    weights: 
+    {
       health: 5,
       firstAid: 5,
       action: 5,
@@ -202,10 +212,11 @@ const jobsRaw = [
 
   {
     id: 16,
-    title: "Tierpfleger*in im Tierheim",
+    title: "Tierpfleger*in",
     group: "Tiere, Natur & Umwelt",
     image: "images/animal_shelter_worker.jpg",
-    weights: {
+    weights: 
+    {
       animals: 5,
       care: 5,
       patience: 4,
@@ -225,7 +236,8 @@ const jobsRaw = [
     title: "Tierarzt / Tierärztin",
     group: "Tiere, Natur & Umwelt",
     image: "images/veterinarian.jpg",
-    weights: {
+    weights: 
+    {
       animals: 5,
       health: 5,
       care: 5,
@@ -245,7 +257,8 @@ const jobsRaw = [
     title: "Tierarzthelfer*in",
     group: "Tiere, Natur & Umwelt",
     image: "images/vet_assistant.jpg",
-    weights: {
+    weights: 
+    {
       animals: 5,
       health: 4,
       care: 4,
@@ -265,7 +278,8 @@ const jobsRaw = [
     title: "Hundefriseur*in",
     group: "Tiere, Natur & Umwelt",
     image: "images/dog_groomer.jpg",
-    weights: {
+    weights: 
+    {
       animals: 5,
       care: 4,
       patience: 4,
@@ -285,7 +299,8 @@ const jobsRaw = [
     title: "Landwirt*in",
     group: "Tiere, Natur & Umwelt",
     image: "images/farmer.jpg",
-    weights: {
+    weights: 
+    {
       animals: 4,
       nature: 5,
       outdoor: 5,
@@ -305,7 +320,8 @@ const jobsRaw = [
     title: "Gärtner*in",
     group: "Tiere, Natur & Umwelt",
     image: "images/gardener.jpg",
-    weights: {
+    weights: 
+    {
       plants: 5,
       nature: 5,
       outdoor: 5,
@@ -325,7 +341,8 @@ const jobsRaw = [
     title: "Florist*in",
     group: "Tiere, Natur & Umwelt",
     image: "images/florist.jpg",
-    weights: {
+    weights: 
+    {
       plants: 5,
       creative: 5,
       design: 4,
@@ -345,7 +362,8 @@ const jobsRaw = [
     title: "Förster*in",
     group: "Tiere, Natur & Umwelt",
     image: "images/forester.jpg",
-    weights: {
+    weights: 
+    {
       nature: 5,
       outdoor: 5,
       plants: 4,
@@ -365,7 +383,8 @@ const jobsRaw = [
     title: "Landschaftsgärtner*in",
     group: "Tiere, Natur & Umwelt",
     image: "images/landscape_gardener.jpg",
-    weights: {
+    weights: 
+    {
       nature: 5,
       plants: 5,
       outdoor: 5,
@@ -385,7 +404,8 @@ const jobsRaw = [
     title: "Imker*in",
     group: "Tiere, Natur & Umwelt",
     image: "images/beekeeper.jpg",
-    weights: {
+    weights: 
+    {
       animals: 5,
       nature: 5,
       outdoor: 4,
@@ -405,7 +425,8 @@ const jobsRaw = [
     title: "Mitarbeiter*in im Naturkundemuseum",
     group: "Tiere, Natur & Umwelt",
     image: "images/natural_history_museum.jpg",
-    weights: {
+    weights: 
+    {
       museum: 5,
       culture: 5,
       nature: 4,
@@ -422,10 +443,11 @@ const jobsRaw = [
   },
   {
     id: 27,
-    title: "Pferdepfleger*in",
+    title: "Tierpfleger*in",
     group: "Tiere, Natur & Umwelt",
     image: "images/horse_caretaker.jpg",
-    weights: {
+    weights: 
+    {
       animals: 5,
       care: 5,
       outdoor: 4,
@@ -445,7 +467,8 @@ const jobsRaw = [
     title: "Mitarbeiter*in auf einem Bauernhof",
     group: "Tiere, Natur & Umwelt",
     image: "images/farm_worker.jpg",
-    weights: {
+    weights: 
+    {
       animals: 5,
       nature: 5,
       outdoor: 5,
@@ -466,7 +489,8 @@ const jobsRaw = [
     title: "Bäcker*in",
     group: "Handwerk & Technik",
     image: "images/baker.jpg",
-    weights: {
+    weights: 
+    {
       food: 5,
       hygiene: 5,
       preparation: 5,
@@ -486,7 +510,8 @@ const jobsRaw = [
     title: "Konditor*in",
     group: "Handwerk & Technik",
     image: "images/pastry_chef.jpg",
-    weights: {
+    weights: 
+    {
       food: 5,
       creative: 5,
       design: 4,
@@ -506,7 +531,8 @@ const jobsRaw = [
     title: "Koch / Köchin",
     group: "Handwerk & Technik",
     image: "images/chef.jpg",
-    weights: {
+    weights: 
+    {
       food: 5,
       hygiene: 5,
       preparation: 5,
@@ -526,7 +552,8 @@ const jobsRaw = [
     title: "Friseur*in",
     group: "Handwerk & Technik",
     image: "images/hairdresser.jpg",
-    weights: {
+    weights: 
+    {
       service: 5,
       customerContact: 5,
       people: 4,
@@ -546,7 +573,8 @@ const jobsRaw = [
     title: "Tischler*in",
     group: "Handwerk & Technik",
     image: "images/carpenter.jpg",
-    weights: {
+    weights: 
+    {
       technical: 5,
       tools: 5,
       repair: 4,
@@ -563,10 +591,11 @@ const jobsRaw = [
   },
   {
     id: 36,
-    title: "Schreiner*in",
+    title: "Tischler*in",
     group: "Handwerk & Technik",
     image: "images/woodworker.jpg",
-    weights: {
+    weights: 
+    {
       technical: 5,
       tools: 5,
       repair: 4,
@@ -583,10 +612,11 @@ const jobsRaw = [
   },
   {
     id: 37,
-    title: "Malerin und Lackiererin",
+    title: "Maler*in",
     group: "Handwerk & Technik",
     image: "images/painter_decorator.jpg",
-    weights: {
+    weights: 
+    {
       creative: 4,
       design: 3,
       technical: 4,
@@ -606,7 +636,8 @@ const jobsRaw = [
     title: "Elektriker*in",
     group: "Handwerk & Technik",
     image: "images/electrician.jpg",
-    weights: {
+    weights: 
+    {
       technical: 5,
       technology: 5,
       tools: 4,
@@ -626,7 +657,8 @@ const jobsRaw = [
     title: "Kfz-Mechatroniker*in",
     group: "Handwerk & Technik",
     image: "images/car_mechanic.jpg",
-    weights: {
+    weights: 
+    {
       technical: 5,
       technology: 4,
       tools: 5,
@@ -646,7 +678,8 @@ const jobsRaw = [
     title: "Fahrradmechaniker*in",
     group: "Handwerk & Technik",
     image: "images/bicycle_mechanic.jpg",
-    weights: {
+    weights: 
+    {
       technical: 5,
       tools: 5,
       repair: 5,
@@ -666,7 +699,8 @@ const jobsRaw = [
     title: "Schornsteinfeger*in",
     group: "Handwerk & Technik",
     image: "images/chimney_sweep.jpg",
-    weights: {
+    weights: 
+    {
       technical: 4,
       tools: 4,
       safety: 5,
@@ -686,7 +720,8 @@ const jobsRaw = [
     title: "Fotograf*in",
     group: "Handwerk & Technik",
     image: "images/photographer.jpg",
-    weights: {
+    weights: 
+    {
       creative: 5,
       media: 5,
       design: 4,
@@ -707,7 +742,8 @@ const jobsRaw = [
     title: "Verkäufer*in im Supermarkt",
     group: "Verkauf, Service & Gastronomie",
     image: "images/supermarket_worker.jpg",
-    weights: {
+    weights: 
+    {
       sales: 5,
       service: 5,
       customerContact: 4,
@@ -727,7 +763,8 @@ const jobsRaw = [
     title: "Verkäufer*in in einer Buchhandlung",
     group: "Verkauf, Service & Gastronomie",
     image: "images/bookstore_worker.jpg",
-    weights: {
+    weights: 
+    {
       sales: 5,
       service: 4,
       customerContact: 4,
@@ -747,7 +784,8 @@ const jobsRaw = [
     title: "Verkäufer*in in einer Bäckerei",
     group: "Verkauf, Service & Gastronomie",
     image: "images/bakery_worker.jpg",
-    weights: {
+    weights: 
+    {
       food: 5,
       sales: 5,
       service: 5,
@@ -767,7 +805,8 @@ const jobsRaw = [
     title: "Verkäufer*in im Kleidungsgeschäft",
     group: "Verkauf, Service & Gastronomie",
     image: "images/clothing_store_worker.jpg",
-    weights: {
+    weights: 
+    {
       sales: 5,
       service: 5,
       customerContact: 5,
@@ -784,10 +823,11 @@ const jobsRaw = [
   },
   {
     id: 50,
-    title: "Kassierer*in",
+    title: "Kassierer*in im Supermarkt",
     group: "Verkauf, Service & Gastronomie",
     image: "images/cashier.jpg",
-    weights: {
+    weights: 
+    {
       sales: 4,
       service: 5,
       customerContact: 4,
@@ -807,7 +847,8 @@ const jobsRaw = [
     title: "Servicekraft im Café",
     group: "Verkauf, Service & Gastronomie",
     image: "images/cafe_worker.jpg",
-    weights: {
+    weights: 
+    {
       food: 5,
       service: 5,
       customerContact: 5,
@@ -827,7 +868,8 @@ const jobsRaw = [
     title: "Barista/Barkeeper*in",
     group: "Verkauf, Service & Gastronomie",
     image: "images/barista.jpg",
-    weights: {
+    weights: 
+    {
       food: 4,
       service: 5,
       customerContact: 5,
@@ -847,7 +889,8 @@ const jobsRaw = [
     title: "Kellner*in",
     group: "Verkauf, Service & Gastronomie",
     image: "images/waiter.jpg",
-    weights: {
+    weights: 
+    {
       service: 5,
       customerContact: 5,
       people: 5,
@@ -867,7 +910,8 @@ const jobsRaw = [
     title: "Hotelmitarbeiter*in",
     group: "Verkauf, Service & Gastronomie",
     image: "images/hotel_worker.jpg",
-    weights: {
+    weights: 
+    {
       service: 5,
       customerContact: 5,
       people: 4,
@@ -887,7 +931,8 @@ const jobsRaw = [
     title: "Rezeptionist*in",
     group: "Verkauf, Service & Gastronomie",
     image: "images/receptionist.jpg",
-    weights: {
+    weights: 
+    {
       service: 5,
       customerContact: 5,
       people: 4,
@@ -907,7 +952,8 @@ const jobsRaw = [
     title: "Mitarbeiter*in im Kino",
     group: "Verkauf, Service & Gastronomie",
     image: "images/cinema_worker.jpg",
-    weights: {
+    weights: 
+    {
       entertainment: 5,
       fun: 5,
       service: 5,
@@ -927,7 +973,8 @@ const jobsRaw = [
     title: "Mitarbeiter*in in einer Eisdiele",
     group: "Verkauf, Service & Gastronomie",
     image: "images/ice_cream_shop_worker.jpg",
-    weights: {
+    weights: 
+    {
       food: 5,
       service: 5,
       customerContact: 5,
@@ -944,10 +991,11 @@ const jobsRaw = [
   },
   {
     id: 58,
-    title: "Marktverkäufer*in",
+    title: "Verkäufer*in auf einem Wochenmarkt",
     group: "Verkauf, Service & Gastronomie",
     image: "images/imarket_vendor.jpg",
-    weights: {
+    weights: 
+    {
       sales: 5,
       customerContact: 5,
       people: 4,
@@ -967,7 +1015,8 @@ const jobsRaw = [
     title: "Mitarbeiter*in im Blumenladen",
     group: "Verkauf, Service & Gastronomie",
     image: "images/flower_shop_worker.jpg",
-    weights: {
+    weights: 
+    {
       plants: 5,
       creative: 5,
       design: 4,
@@ -985,10 +1034,11 @@ const jobsRaw = [
 
   {
     id: 61,
-    title: "Verwaltungsmitarbeiter*in im Rathaus",
+    title: "Büromitarbeiter*in",
     group: "Büro, Medien & Kreatives",
     image: "images/city_hall_office_worker.jpg",
-    weights: {
+    weights: 
+    {
       administration: 5,
       office: 5,
       organization: 5,
@@ -1008,7 +1058,8 @@ const jobsRaw = [
     title: "Bankkaufmann / Bankkauffrau",
     group: "Büro, Medien & Kreatives",
     image: "images/bank_employee.jpg",
-    weights: {
+    weights: 
+    {
       office: 5,
       service: 5,
       customerContact: 5,
@@ -1028,7 +1079,8 @@ const jobsRaw = [
     title: "Journalist*in",
     group: "Büro, Medien & Kreatives",
     image: "images/journalist.jpg",
-    weights: {
+    weights: 
+    {
       media: 5,
       communication: 5,
       creative: 4,
@@ -1048,7 +1100,8 @@ const jobsRaw = [
     title: "Redakteur*in",
     group: "Büro, Medien & Kreatives",
     image: "images/editor.jpg",
-    weights: {
+    weights: 
+    {
       media: 5,
       communication: 5,
       creative: 4,
@@ -1068,7 +1121,8 @@ const jobsRaw = [
     title: "Radiomoderator*in",
     group: "Büro, Medien & Kreatives",
     image: "images/radio_host.jpg",
-    weights: {
+    weights: 
+    {
       media: 5,
       communication: 5,
       creative: 4,
@@ -1088,7 +1142,8 @@ const jobsRaw = [
     title: "Kameramann / Kamerafrau",
     group: "Büro, Medien & Kreatives",
     image: "images/camera_operator.jpg",
-    weights: {
+    weights: 
+    {
       media: 5,
       technology: 5,
       technical: 4,
@@ -1108,7 +1163,8 @@ const jobsRaw = [
     title: "Grafikdesigner*in",
     group: "Büro, Medien & Kreatives",
     image: "images/graphic_designer.jpg",
-    weights: {
+    weights: 
+    {
       creative: 5,
       design: 5,
       media: 4,
@@ -1128,7 +1184,8 @@ const jobsRaw = [
     title: "Webdesigner*in",
     group: "Büro, Medien & Kreatives",
     image: "images/web_designer.jpg",
-    weights: {
+    weights: 
+    {
       technology: 5,
       creative: 4,
       design: 5,
@@ -1148,7 +1205,8 @@ const jobsRaw = [
     title: "Social-Media-Manager*in",
     group: "Büro, Medien & Kreatives",
     image: "images/social_media_manager.jpg",
-    weights: {
+    weights: 
+    {
       media: 5,
       communication: 5,
       creative: 5,
@@ -1168,7 +1226,8 @@ const jobsRaw = [
     title: "Buchhändler*in",
     group: "Büro, Medien & Kreatives",
     image: "images/bookseller.jpg",
-    weights: {
+    weights: 
+    {
       library: 5,
       sales: 4,
       service: 4,
@@ -1188,7 +1247,8 @@ const jobsRaw = [
     title: "Bibliothekar*in",
     group: "Büro, Medien & Kreatives",
     image: "images/librarian.jpg",
-    weights: {
+    weights: 
+    {
       library: 5,
       quiet: 5,
       organization: 5,
@@ -1208,7 +1268,8 @@ const jobsRaw = [
     title: "Museumspädagog*in",
     group: "Büro, Medien & Kreatives",
     image: "images/museum_educator.jpg",
-    weights: {
+    weights: 
+    {
       museum: 5,
       culture: 5,
       education: 5,
@@ -1228,7 +1289,8 @@ const jobsRaw = [
     title: "Veranstaltungsplaner*in",
     group: "Büro, Medien & Kreatives",
     image: "images/event_planner.jpg",
-    weights: {
+    weights: 
+    {
       organization: 5,
       communication: 4,
       creative: 4,
@@ -1248,7 +1310,8 @@ const jobsRaw = [
     title: "Schauspieler*in im Theater",
     group: "Büro, Medien & Kreatives",
     image: "images/theater_actor.jpg",
-    weights: {
+    weights: 
+    {
       culture: 5,
       creative: 5,
       performance: 5,
@@ -1269,7 +1332,8 @@ const jobsRaw = [
     title: "Feuerwehrmann / Feuerwehrfrau",
     group: "Öffentlicher Dienst, Sport & Freizeit",
     image: "images/firefighter.jpg",
-    weights: {
+    weights: 
+    {
       action: 5,
       safety: 5,
       teamwork: 5,
@@ -1289,7 +1353,8 @@ const jobsRaw = [
     title: "Bademeister*in",
     group: "Öffentlicher Dienst, Sport & Freizeit",
     image: "images/lifeguard.jpg",
-    weights: {
+    weights: 
+    {
       sport: 5,
       safety: 5,
       health: 4,
@@ -1309,7 +1374,8 @@ const jobsRaw = [
     title: "Mitarbeiter*in im Freizeitpark",
     group: "Öffentlicher Dienst, Sport & Freizeit",
     image: "images/amusement_park_worker.jpg",
-    weights: {
+    weights: 
+    {
       entertainment: 5,
       fun: 5,
       service: 5,
@@ -1329,7 +1395,8 @@ const jobsRaw = [
     title: "Servicekraft im Dönerladen",
     group: "Öffentlicher Dienst, Sport & Freizeit",
     image: "images/doner_shop_worker.jpg",
-    weights: {
+    weights: 
+    {
       food: 5,
       service: 5,
       hygiene: 5,
@@ -1349,7 +1416,8 @@ const jobsRaw = [
     title: "Erntehilfe auf einem Obsthof",
     group: "Öffentlicher Dienst, Sport & Freizeit",
     image: "images/fruit_harvest_worker.jpg",
-    weights: {
+    weights: 
+    {
       nature: 5,
       plants: 5,
       outdoor: 5,
@@ -1369,7 +1437,8 @@ const jobsRaw = [
     title: "Mitarbeiter*in im Hochseilgarten",
     group: "Öffentlicher Dienst, Sport & Freizeit",
     image: "images/high_ropes_course_worker.jpg",
-    weights: {
+    weights: 
+    {
       action: 5,
       sport: 5,
       outdoor: 5,

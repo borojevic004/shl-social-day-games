@@ -225,7 +225,7 @@ const SHLMatchmaker = (() => {
   function showBuzzer() {
     els.controls.style.display = "none";
     els.progress.textContent = "";
-    els.subtitle.textContent = "Jetzt kommt dein persönliches Match!";
+    els.subtitle.textContent = "Du hast alle Interessen geswiped!";
     if (els.screenSub) {
       els.screenSub.textContent = "Drücke den Buzzer und entdecke deine besten Sozialer-Tag-Jobs.";
     }
@@ -233,12 +233,19 @@ const SHLMatchmaker = (() => {
     els.card.className = "card buzzer-card card-pop";
     els.card.setAttribute("aria-label", "Alle Interessen wurden bewertet. Matches können angezeigt werden.");
     els.card.innerHTML = `
-      <div class="int-text">Du hast alle Interessen geswiped!</div>
       <div class="int-sub">Bereit für deine Top ${RESULT_LIMIT}?</div>
       <button class="buzzer" id="buzzer" type="button">Matches anzeigen</button>
     `;
-    document.getElementById("buzzer").addEventListener("click", showResults);
+    document.getElementById("buzzer").addEventListener("click", pressBuzzer);
     popCard();
+  }
+
+  function pressBuzzer(event) {
+    const button = event.currentTarget;
+    button.disabled = true;
+    button.classList.add("buzzer-pressed");
+
+    window.setTimeout(showResults, 180);
   }
 
   function renderRankingModal() {
@@ -307,9 +314,10 @@ const SHLMatchmaker = (() => {
     const tasks = SHLJobDetails.getJobTasks(job).map((task) => `<li>${task}</li>`).join("");
 
     SHLModal.open(`
-      <div class="modal-title" id="job-modal-title">${job.matchScore}% Match</div>
-      <div class="modal-job">Bereich: ${job.title}</div>
-      <div class="modal-meta">${job.group}</div>
+      <div class="modal-job-heading">
+        <div class="modal-title" id="job-modal-title">${job.matchScore}% Match</div>
+        <div class="modal-job">Bereich: ${job.title}</div>
+      </div>
       ${imageHtml(job)}
       ${SHLJobFinder.qrHtml(job)}
       <div class="modal-bullets">
@@ -317,12 +325,10 @@ const SHLMatchmaker = (() => {
         <ul>${tasks}</ul>
       </div>
       <div class="modal-actions">
-        ${SHLJobFinder.buttonHtml(job)}
         <button class="modal-restart-btn" id="job-modal-restart" type="button">Nochmal swipen</button>
         <button class="modal-close-btn" id="job-modal-back" type="button">Zur&uuml;ck zu Top ${RESULT_LIMIT}</button>
       </div>
     `, (content) => {
-      SHLJobFinder.bindButtons(content);
       content.querySelector("#job-modal-back").onclick = renderRankingModal;
       content.querySelector("#job-modal-restart").onclick = () => startRound(true);
     });
@@ -346,7 +352,7 @@ const SHLMatchmaker = (() => {
     els.card.classList.remove("swipe-tutorial");
     els.card.removeAttribute("data-tutorial-direction");
     els.card.removeAttribute("data-tutorial-label");
-    els.subtitle.textContent = "Swipe deine Interessen und finde heraus, welcher Job zu dir passt!";
+    els.subtitle.textContent = "Swipe dich durch deine Interessen und entdecke Jobs, die zu dir passen!";
     if (els.screenSub) {
       els.screenSub.textContent = "Nach rechts für „Passt zu mir“, nach links für „Eher nicht“.";
     }
