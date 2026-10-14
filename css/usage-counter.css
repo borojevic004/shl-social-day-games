@@ -1,0 +1,329 @@
+/* Anonymous local usage statistics */
+
+.usage-stats-open {
+  position: relative;
+  z-index: 3;
+  margin-top: clamp(18px, 3vh, 30px);
+  padding: 9px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--shl-weiss);
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+}
+
+.usage-stats-open strong {
+  font-family: "SHL Unbounded", sans-serif;
+  font-size: 0.72rem;
+}
+
+.usage-stats-open span {
+  padding-left: 9px;
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  font-size: 0.72rem;
+}
+
+.usage-stats-open:hover,
+.usage-stats-open:focus-visible {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.usage-counter-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.usage-counter-modal.is-open {
+  display: flex;
+}
+
+.usage-counter-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 25, 55, 0.72);
+}
+
+.usage-counter-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(960px, 100%);
+  max-height: calc(100dvh - 40px);
+  padding: 22px;
+  border-radius: 20px;
+  overflow-y: auto;
+  color: var(--shl-dunkelblau);
+  background: var(--shl-weiss);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.usage-counter-header,
+.usage-counter-footer,
+.usage-visit > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.usage-counter-header span,
+.usage-current-visit > span {
+  color: var(--shl-blau);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.usage-counter-header h2 {
+  margin-top: 3px;
+  color: var(--shl-dunkelblau);
+  font-family: "SHL Unbounded", sans-serif;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+}
+
+.usage-counter-close {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  color: var(--shl-weiss);
+  background: var(--shl-rot);
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.usage-current-visit {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-left: 6px solid var(--shl-gelb);
+  background: var(--shl-hellgelb);
+  display: grid;
+  gap: 2px;
+}
+
+.usage-current-visit strong {
+  font-family: "SHL Unbounded", sans-serif;
+  font-size: 1rem;
+}
+
+.usage-current-visit small {
+  font-size: 0.78rem;
+}
+
+.usage-visit-form {
+  margin: 18px 0;
+}
+
+.usage-visit-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 900;
+}
+
+.usage-visit-form > div {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto;
+  gap: 10px;
+}
+
+.usage-visit-form input {
+  min-width: 0;
+  padding: 11px 13px;
+  border: 2px solid #d9def8;
+  border-radius: 8px;
+  color: var(--shl-dunkelblau);
+  background: var(--shl-weiss);
+}
+
+.usage-visit-form button,
+.usage-export {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  color: var(--shl-dunkelblau);
+  background: var(--shl-gelb);
+  box-shadow: 0 3px 0 var(--shl-dunkelgelb);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.usage-history {
+  display: grid;
+  gap: 12px;
+}
+
+.usage-visit {
+  padding: 14px;
+  border: 2px solid #e4e7f6;
+  border-radius: 10px;
+  background: #f8f9ff;
+}
+
+.usage-visit.is-active {
+  border-color: var(--shl-gelb);
+}
+
+.usage-visit header span {
+  font-size: 0.74rem;
+}
+
+.usage-visit header h3 {
+  margin-top: 2px;
+  font-family: "SHL Unbounded", sans-serif;
+  font-size: 0.95rem;
+}
+
+.usage-visit-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.usage-visit-actions > strong {
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: var(--shl-hellviolett);
+  white-space: nowrap;
+  font-size: 0.76rem;
+}
+
+.usage-visit-actions button {
+  border: 2px solid var(--shl-rot);
+  border-radius: 999px;
+  padding: 5px 9px;
+  color: var(--shl-dunkelrot);
+  background: var(--shl-weiss);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.usage-visit-actions button:hover,
+.usage-visit-actions button:focus-visible {
+  color: var(--shl-weiss);
+  background: var(--shl-rot);
+}
+
+.usage-games {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.usage-game-stat {
+  min-width: 0;
+  padding: 9px;
+  border-left: 4px solid var(--shl-blau);
+  background: var(--shl-weiss);
+  display: grid;
+  gap: 3px;
+}
+
+.usage-game-stat strong,
+.usage-game-stat span {
+  overflow-wrap: anywhere;
+}
+
+.usage-game-stat strong {
+  font-size: 0.78rem;
+}
+
+.usage-game-stat span {
+  font-size: 0.72rem;
+}
+
+.usage-game-stat b {
+  color: var(--shl-blau);
+}
+
+.usage-empty {
+  padding: 24px;
+  border: 2px dashed #d9def8;
+  text-align: center;
+}
+
+.usage-counter-footer {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 2px solid #eef0fa;
+}
+
+.usage-counter-footer p {
+  font-size: 0.74rem;
+}
+
+.usage-export:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.usage-counter-modal.storage-warning .usage-current-visit::after {
+  content: "Der Browser blockiert den lokalen Speicher. Bitte die CSV vor dem Schliessen exportieren.";
+  margin-top: 5px;
+  color: var(--shl-dunkelrot);
+  font-size: 0.74rem;
+}
+
+@media (max-width: 720px) {
+  .usage-stats-open {
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .usage-stats-open span {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .usage-visit-form > div,
+  .usage-games {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .usage-visit-form button {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 460px) {
+  .usage-counter-modal {
+    padding: 8px;
+  }
+
+  .usage-counter-dialog {
+    max-height: calc(100dvh - 16px);
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .usage-games {
+    grid-template-columns: 1fr;
+  }
+
+  .usage-visit > header,
+  .usage-counter-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .usage-visit-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .usage-stats-open {
+    margin-top: 10px;
+    padding: 6px 12px;
+  }
+}

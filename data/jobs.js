@@ -212,7 +212,7 @@ const jobsRaw = [
 
   {
     id: 16,
-    title: "Tierpfleger*in",
+    title: "Tierpfleger*in im Tierheim",
     group: "Tiere, Natur & Umwelt",
     image: "images/animal_shelter_worker.jpg",
     weights: 
@@ -443,7 +443,7 @@ const jobsRaw = [
   },
   {
     id: 27,
-    title: "Tierpfleger*in",
+    title: "Pferdepfleger*in",
     group: "Tiere, Natur & Umwelt",
     image: "images/horse_caretaker.jpg",
     weights: 
@@ -570,7 +570,7 @@ const jobsRaw = [
   },
   {
     id: 35,
-    title: "Tischler*in",
+    title: "Schreiner*in",
     group: "Handwerk & Technik",
     image: "images/carpenter.jpg",
     weights: 

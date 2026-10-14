@@ -458,6 +458,37 @@ body.matchmaker-active .hint:empty {
 
 /* Buttons */
 
+.buzzer-prompt {
+  width: 100%;
+  display: grid;
+  grid-template-columns: clamp(44px, 8vh, 62px) minmax(0, 1fr) clamp(44px, 8vh, 62px);
+  align-items: center;
+  gap: 0;
+  color: var(--shl-dunkelblau);
+  font-family: "SHL Unbounded", sans-serif;
+  font-size: clamp(0.6rem, 1.6vh, 0.76rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.buzzer-prompt span {
+  grid-column: 2;
+  text-align: center;
+}
+
+.buzzer-prompt-arrow {
+  width: clamp(44px, 8vh, 62px);
+  height: auto;
+  margin: -9px -5px -9px 0;
+  transform: rotate(70deg);
+  transform-origin: center;
+  pointer-events: none;
+  user-select: none;
+  position: relative;
+  top: 34px;
+  left: 88px;
+}
+
 .btn {
   flex: 1;
   max-width: 260px;
@@ -687,6 +718,29 @@ button:focus-visible,
 .match-result:focus-visible {
   border-color: var(--shl-blau);
   background: var(--shl-hellblau);
+}
+
+.match-result-best {
+  border-color: var(--shl-gelb);
+  background: var(--shl-hellgelb);
+  box-shadow: 0 4px 0 var(--shl-dunkelgelb);
+}
+
+.match-result-best:hover,
+.match-result-best:focus-visible {
+  border-color: var(--shl-dunkelgelb);
+  background: var(--shl-hellgelb);
+}
+
+.match-best-label {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 3px 7px;
+  background: var(--shl-gelb);
+  color: var(--shl-dunkelblau);
+  font-size: 0.68rem;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .match-rank,

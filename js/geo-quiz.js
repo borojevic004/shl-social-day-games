@@ -226,6 +226,7 @@ const SHLGeoQuiz = (() => {
     sourceImageData: null,
     ready: false,
     locked: false,
+    roundCompleted: false,
     projectsVisible: false,
     zoom: 1,
     panX: 0,
@@ -791,6 +792,10 @@ const SHLGeoQuiz = (() => {
   }
 
   function finishRound() {
+    if (!state.roundCompleted && typeof SHLUsageCounter !== "undefined") {
+      SHLUsageCounter.recordComplete("geoQuiz");
+    }
+    state.roundCompleted = true;
     state.locked = true;
     renderMap(true);
     els.progress.textContent = "Fertig!";
@@ -812,13 +817,17 @@ const SHLGeoQuiz = (() => {
     }
   }
 
-  function startRound() {
+  function startRound(trackUsage = true) {
+    if (trackUsage !== false && typeof SHLUsageCounter !== "undefined") {
+      SHLUsageCounter.recordStart("geoQuiz");
+    }
     SHLConfetti.clear();
     hideProjects();
     state.order = shuffle(countries);
     state.currentIndex = 0;
     state.correct = new Set();
     state.skipped = new Set();
+    state.roundCompleted = false;
     state.attemptsLeft = MAX_ATTEMPTS_PER_COUNTRY;
     state.locked = false;
     renderMap();
@@ -841,7 +850,8 @@ const SHLGeoQuiz = (() => {
       renderProjectMarkers();
       state.ready = true;
       els.loading.classList.add("is-hidden");
-      startRound();
+      const screenIsActive = document.getElementById("screen-geo-quiz")?.classList.contains("screen-active");
+      startRound(screenIsActive);
     };
     image.onerror = () => {
       els.loading.textContent = "Die Karte konnte nicht geladen werden.";

@@ -126,6 +126,9 @@ const SHLJobSwiper = (() => {
   }
 
   function showMatch(job) {
+    if (typeof SHLUsageCounter !== "undefined") {
+      SHLUsageCounter.recordComplete("jobSwiper");
+    }
     SHLModal.open(`
       <div class="job-swiper-match">
         <button class="job-swiper-match-close" id="job-swiper-match-close" type="button" aria-label="Popup schließen">×</button>
@@ -209,6 +212,9 @@ const SHLJobSwiper = (() => {
   }
 
   function startRound() {
+    if (typeof SHLUsageCounter !== "undefined") {
+      SHLUsageCounter.recordStart("jobSwiper");
+    }
     state.tutorialRun++;
     state.jobs = shuffle(jobs);
     state.currentIndex = 0;

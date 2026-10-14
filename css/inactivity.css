@@ -1,0 +1,93 @@
+/* Back and inactivity controls stay together on every game screen. */
+
+.screen-nav-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  width: max-content;
+}
+
+.matchmaker-screen > .screen-nav-controls,
+.job-swiper-screen > .screen-nav-controls,
+.geo-quiz-screen > .screen-nav-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.matchmaker-screen > .screen-nav-controls,
+.geo-quiz-screen > .screen-nav-controls {
+  z-index: 5;
+}
+
+.job-swiper-screen > .screen-nav-controls {
+  z-index: 8;
+}
+
+.projects-screen > .screen-nav-controls,
+.social-simulator-screen > .screen-nav-controls {
+  position: fixed;
+  z-index: 4;
+  top: 18px;
+  left: 18px;
+}
+
+.screen-nav-controls .matchmaker-back-btn,
+.screen-nav-controls .job-swiper-back-btn,
+.screen-nav-controls .geo-quiz-back-btn,
+.screen-nav-controls .projects-back-btn,
+.screen-nav-controls .simulator-back-btn,
+.screen-nav-controls .inactivity-pause-btn {
+  position: static;
+  top: auto;
+  left: auto;
+}
+
+.inactivity-pause-btn {
+  min-height: 26px;
+  padding: 4px 9px;
+  border: 1px solid rgba(38, 47, 94, 0.48);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--shl-dunkelblau);
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: 0 2px 5px rgba(38, 47, 94, 0.12);
+  opacity: 0.48;
+  cursor: pointer;
+  font-size: 0.62rem;
+  font-weight: 900;
+  transition: opacity 0.16s ease, background 0.16s ease, transform 0.16s ease;
+}
+
+.inactivity-pause-btn:hover,
+.inactivity-pause-btn:focus-visible {
+  opacity: 0.9;
+}
+
+.inactivity-pause-btn:active {
+  transform: translateY(1px);
+}
+
+.inactivity-pause-btn.is-paused {
+  border-color: var(--shl-dunkelgelb);
+  background: var(--shl-gelb);
+  box-shadow: 0 3px 0 var(--shl-dunkelgelb);
+  opacity: 1;
+}
+
+@media (max-width: 760px), (orientation: landscape) and (max-height: 560px) {
+  .inactivity-pause-btn {
+    min-height: 24px;
+    padding: 3px 7px;
+    font-size: 0.56rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inactivity-pause-btn {
+    transition: none;
+  }
+}

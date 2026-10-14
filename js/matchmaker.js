@@ -233,7 +233,10 @@ const SHLMatchmaker = (() => {
     els.card.className = "card buzzer-card card-pop";
     els.card.setAttribute("aria-label", "Alle Interessen wurden bewertet. Matches können angezeigt werden.");
     els.card.innerHTML = `
-      <div class="int-sub">Bereit für deine Top ${RESULT_LIMIT}?</div>
+      <div class="buzzer-prompt">
+        <img class="buzzer-prompt-arrow" src="assets/home/arrow_crna.png" alt="" />
+        <span>Klicke auf den Button</span>
+      </div>
       <button class="buzzer" id="buzzer" type="button">Matches anzeigen</button>
     `;
     document.getElementById("buzzer").addEventListener("click", pressBuzzer);
@@ -253,10 +256,11 @@ const SHLMatchmaker = (() => {
       <div class="modal-title" id="job-modal-title">Deine besten Matches</div>
       <div class="match-results">
         ${state.bestMatches.map((job, index) => `
-          <button class="match-result" type="button" data-job-id="${job.id}">
+          <button class="match-result${index === 0 ? " match-result-best" : ""}" type="button" data-job-id="${job.id}">
             <span class="match-rank">${index + 1}</span>
             ${imageHtml(job, "match-result-image")}
             <span class="match-result-copy">
+              ${index === 0 ? '<span class="match-best-label">Bester Match</span>' : ""}
               <strong>Bereich: ${job.title}</strong>
               <small>${job.group}</small>
             </span>
@@ -283,6 +287,9 @@ const SHLMatchmaker = (() => {
   function showResults() {
     if (state.resultShown) return;
     state.resultShown = true;
+    if (typeof SHLUsageCounter !== "undefined") {
+      SHLUsageCounter.recordComplete("matchmaker");
+    }
     state.bestMatches = buildBalancedMatches();
 
     const bestJob = state.bestMatches[0];
@@ -335,6 +342,9 @@ const SHLMatchmaker = (() => {
   }
 
   function startRound(withTutorial = true) {
+    if (typeof SHLUsageCounter !== "undefined") {
+      SHLUsageCounter.recordStart("matchmaker");
+    }
     state.tutorialRun++;
     state.tutorialActive = false;
     state.currentIndex = 0;
