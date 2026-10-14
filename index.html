@@ -10,20 +10,105 @@
   <link rel="stylesheet" href="css/portrait.css" media="(orientation: portrait)" />
   <link rel="stylesheet" href="css/landscape.css" media="(orientation: landscape)" />
   <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/mode-selection.css" />
+  <link rel="stylesheet" href="css/usage-counter.css" />
   <link rel="stylesheet" href="css/job-swiper.css" />
   <link rel="stylesheet" href="css/geo-quiz.css" />
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
   <link rel="stylesheet" href="css/projects-map.css" />
+  <link rel="stylesheet" href="css/social-simulator.css" />
+  <link rel="stylesheet" href="css/inactivity.css" />
 </head>
-<body class="home-active">
+<body class="home-active mode-selection-active">
   <div class="confetti-container" id="confettiContainer" aria-hidden="true"></div>
 
   <div class="modal-backdrop" id="job-modal" aria-hidden="true">
     <div class="modal" id="job-modal-content" role="dialog" aria-modal="true" aria-labelledby="job-modal-title"></div>
   </div>
 
+  <div class="usage-counter-modal" id="usage-counter-modal" aria-hidden="true">
+    <div class="usage-counter-backdrop" id="usage-counter-backdrop"></div>
+    <section class="usage-counter-dialog" role="dialog" aria-modal="true" aria-labelledby="usage-counter-title">
+      <header class="usage-counter-header">
+        <div>
+          <span>LOKALE STATISTIK</span>
+          <h2 id="usage-counter-title">Nutzungszahlen</h2>
+        </div>
+        <button class="usage-counter-close" id="usage-counter-close" type="button" aria-label="Statistik schlie&szlig;en">&times;</button>
+      </header>
+
+      <div class="usage-current-visit" id="usage-current-visit"></div>
+
+      <form class="usage-visit-form" id="usage-visit-form">
+        <label for="usage-school-name">Neue Schule oder Veranstaltung</label>
+        <div>
+          <input id="usage-school-name" name="school" type="text" maxlength="120" placeholder="Name der Schule" required />
+          <button type="submit">Neuen Schulbesuch starten</button>
+        </div>
+      </form>
+
+      <div class="usage-history" id="usage-history"></div>
+
+      <footer class="usage-counter-footer">
+        <p>Gespeichert werden nur Schule, Datum und anonyme Z&auml;hler.</p>
+        <button class="usage-export" id="usage-export" type="button">CSV herunterladen</button>
+      </footer>
+    </section>
+  </div>
+
   <div class="app">
-    <section class="home-screen screen-active" id="screen-home">
+    <section class="mode-selection-screen screen-active" id="screen-mode-selection">
+      <div class="mode-selection-decoration" aria-hidden="true">
+        <img class="mode-selection-decor mode-selection-globe" src="assets/home/globe.png" alt="" />
+        <img class="mode-selection-decor mode-selection-megaphone" src="assets/home/megaphone.png" alt="" />
+        <img class="mode-selection-decor mode-selection-heart" src="assets/home/heart.png" alt="" />
+        <img class="mode-selection-decor mode-selection-shl" src="assets/home/shl.png" alt="" />
+      </div>
+
+      <div class="mode-selection-content">
+        <div class="mode-selection-domain">sozialertag.de</div>
+        <h1>Wie viel Zeit habt ihr?</h1>
+        <p>W&auml;hlt den passenden Modus f&uuml;r eure Situation am Stand.</p>
+
+        <div class="mode-selection-options" aria-label="Modus ausw&auml;hlen">
+          <button class="mode-option mode-option-short" id="select-mode-short" type="button">
+            <span class="mode-option-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 2" />
+              </svg>
+            </span>
+            <span class="mode-option-copy">
+              <strong>Kurze Pause</strong>
+              <small>Matchmaker &amp; Job Swiper</small>
+            </span>
+          </button>
+
+          <button class="mode-option mode-option-full" id="select-mode-full" type="button">
+            <span class="mode-option-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="3" width="7" height="7" rx="1" />
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+                <rect x="14" y="14" width="7" height="7" rx="1" />
+              </svg>
+            </span>
+            <span class="mode-option-copy">
+              <strong>Mehr Zeit</strong>
+              <small>Alle vier Spiele</small>
+            </span>
+          </button>
+        </div>
+
+        <button class="usage-stats-open" id="usage-stats-open" type="button">
+          <strong>Nutzungszahlen</strong>
+          <span id="usage-active-label">Noch kein Schulbesuch gestartet</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="home-screen" id="screen-home" aria-hidden="true">
+      <button class="home-mode-switch" id="change-app-mode" type="button">Modus wechseln</button>
       <div class="home-decoration" aria-hidden="true">
         <img class="home-decor home-decor-globe" src="assets/home/globe.png" alt="" />
         <img class="home-decor home-decor-location" src="assets/home/location.png" alt="" />
@@ -70,7 +155,7 @@
             </span>
           </button>
 
-          <button class="home-menu-card home-menu-runner" id="start-geo-quiz" type="button">
+          <button class="home-menu-card home-menu-runner" id="start-geo-quiz" data-mode="full-only" type="button">
             <span class="home-menu-icon" aria-hidden="true">
               <svg viewBox="0 0 64 64">
                 <path d="M32 57s18-17 18-34A18 18 0 1 0 14 23c0 17 18 34 18 34Z" />
@@ -83,7 +168,7 @@
             </span>
           </button>
 
-          <button class="home-menu-card home-menu-projects" id="start-projects" type="button">
+          <button class="home-menu-card home-menu-projects" id="start-simulator" data-mode="full-only" type="button">
             <span class="home-menu-icon" aria-hidden="true">
               <svg viewBox="0 0 64 64">
                 <rect x="13" y="11" width="38" height="43" rx="5" />
@@ -91,19 +176,27 @@
               </svg>
             </span>
             <span class="home-menu-copy">
-              <strong>Projekte</strong>
-              <small>Unsere Standorte</small>
+              <strong>Simulator</strong>
+              <small>Erlebe deinen Sozialen Tag</small>
             </span>
           </button>
+
+          <span class="home-menu-placeholder" aria-hidden="true"></span>
+          <span class="home-menu-placeholder" aria-hidden="true"></span>
         </div>
       </div>
     </section>
 
     <section class="matchmaker-screen" id="screen-matchmaker" aria-hidden="true">
-      <button class="matchmaker-back-btn" id="back-home" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
-        <span class="matchmaker-back-arrow" aria-hidden="true">&larr;</span>
-        <span class="matchmaker-back-label">Zur&uuml;ck</span>
-      </button>
+      <div class="screen-nav-controls">
+        <button class="matchmaker-back-btn" id="back-home" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
+          <span class="matchmaker-back-arrow" aria-hidden="true">&larr;</span>
+          <span class="matchmaker-back-label">Zur&uuml;ck</span>
+        </button>
+        <button class="inactivity-pause-btn" data-inactivity-pause type="button" aria-pressed="false" title="Automatische R&uuml;ckkehr pausieren">
+          <span aria-hidden="true">&#8545;</span><span data-pause-label>Pause</span>
+        </button>
+      </div>
 
       <header class="header">
         <div class="badge">SOZIALER TAG</div>
@@ -141,10 +234,15 @@
     </section>
 
     <section class="job-swiper-screen" id="screen-job-swiper" aria-hidden="true">
-      <button class="job-swiper-back-btn" id="job-swiper-back" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
-        <span aria-hidden="true">&larr;</span>
-        <span class="job-swiper-back-label">Zur&uuml;ck</span>
-      </button>
+      <div class="screen-nav-controls">
+        <button class="job-swiper-back-btn" id="job-swiper-back" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
+          <span aria-hidden="true">&larr;</span>
+          <span class="job-swiper-back-label">Zur&uuml;ck</span>
+        </button>
+        <button class="inactivity-pause-btn" data-inactivity-pause type="button" aria-pressed="false" title="Automatische R&uuml;ckkehr pausieren">
+          <span aria-hidden="true">&#8545;</span><span data-pause-label>Pause</span>
+        </button>
+      </div>
 
       <div class="job-swiper-panel">
         <header class="job-swiper-header">
@@ -176,14 +274,19 @@
     </section>
 
     <section class="geo-quiz-screen" id="screen-geo-quiz" aria-hidden="true">
-      <button class="geo-quiz-back-btn" id="geo-quiz-back" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
-        <span aria-hidden="true">&larr;</span>
-        <span class="geo-quiz-back-label">Zur&uuml;ck</span>
-      </button>
+      <div class="screen-nav-controls">
+        <button class="geo-quiz-back-btn" id="geo-quiz-back" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
+          <span aria-hidden="true">&larr;</span>
+          <span class="geo-quiz-back-label">Zur&uuml;ck</span>
+        </button>
+        <button class="inactivity-pause-btn" data-inactivity-pause type="button" aria-pressed="false" title="Automatische R&uuml;ckkehr pausieren">
+          <span aria-hidden="true">&#8545;</span><span data-pause-label>Pause</span>
+        </button>
+      </div>
 
       <div class="geo-quiz-panel">
         <header class="geo-quiz-header">
-          <div class="geo-quiz-badge">SOZIALER TAG 2026</div>
+          <div class="geo-quiz-badge">SOZIALER TAG</div>
           <h1>Geo Quiz</h1>
           <p>Wo liegen unsere Projektl&auml;nder?</p>
         </header>
@@ -222,14 +325,19 @@
     </section>
 
     <section class="projects-screen" id="screen-projects" aria-hidden="true">
-      <button class="projects-back-btn" id="projects-back" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
-        <span aria-hidden="true">&larr;</span>
-        <span class="projects-back-label">Zur&uuml;ck</span>
-      </button>
+      <div class="screen-nav-controls">
+        <button class="projects-back-btn" id="projects-back" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
+          <span aria-hidden="true">&larr;</span>
+          <span class="projects-back-label">Zur&uuml;ck</span>
+        </button>
+        <button class="inactivity-pause-btn" data-inactivity-pause type="button" aria-pressed="false" title="Automatische R&uuml;ckkehr pausieren">
+          <span aria-hidden="true">&#8545;</span><span data-pause-label>Pause</span>
+        </button>
+      </div>
 
       <div class="projects-panel">
         <header class="projects-header">
-          <div class="projects-badge">SOZIALER TAG 2026</div>
+          <div class="projects-badge">SOZIALER TAG</div>
           <h1>Projekte</h1>
           <p>Entdecke, wo SHL Projekte junge Menschen unterst&uuml;tzen.</p>
         </header>
@@ -240,6 +348,43 @@
             Die Projektkarte konnte nicht geladen werden. Bitte pr&uuml;fe die Internetverbindung.
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="social-simulator-screen" id="screen-simulator" aria-hidden="true">
+      <div class="screen-nav-controls">
+        <button class="simulator-back-btn" id="simulator-back" type="button" aria-label="Zur&uuml;ck zum Hauptmen&uuml;">
+          <span aria-hidden="true">&larr;</span>
+          <span class="simulator-back-label">Zur&uuml;ck</span>
+        </button>
+        <button class="inactivity-pause-btn" data-inactivity-pause type="button" aria-pressed="false" title="Automatische R&uuml;ckkehr pausieren">
+          <span aria-hidden="true">&#8545;</span><span data-pause-label>Pause</span>
+        </button>
+      </div>
+
+      <div class="simulator-panel">
+        <header class="simulator-header">
+          <div class="simulator-badge">SOZIALER TAG</div>
+          <h1>Social Day Simulator</h1>
+          <p>Erlebe in wenigen Schritten, wie dein Sozialer Tag aussehen kann.</p>
+        </header>
+
+        <section class="simulator-game" id="social-simulator" aria-live="polite">
+          <div class="simulator-step" id="simulator-step">Schritt 1 von 4</div>
+          <div class="simulator-stage" id="simulator-stage"></div>
+          <div class="simulator-actions" id="simulator-actions"></div>
+          <aside class="simulator-tip-jar" id="simulator-tip-jar" aria-label="Gesammelter Betrag: 0 Euro">
+            <div class="tip-jar-total">
+              <span>Dein Verdienst</span>
+              <strong id="tip-jar-total">0 &euro;</strong>
+            </div>
+            <div class="tip-jar-scene" aria-hidden="true">
+              <div class="tip-jar-money" id="tip-jar-money"></div>
+              <div class="tip-jar-neck"></div>
+              <div class="tip-jar-glass"></div>
+            </div>
+          </aside>
+        </section>
       </div>
     </section>
   </div>
@@ -264,6 +409,9 @@
   <script src="data/projects.js?v=20260619-3"></script>
   <script src="vendor/leaflet/leaflet.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/mode-selection.js"></script>
+  <script src="js/usage-counter.js"></script>
+  <script src="js/inactivity.js"></script>
   <script src="js/modal.js"></script>
   <script src="js/confetti.js"></script>
   <script src="js/matching.js"></script>
@@ -274,5 +422,6 @@
   <script src="js/job-swiper.js"></script>
   <script src="js/geo-quiz.js?v=20260624-4"></script>
   <script src="js/projects-map.js"></script>
+  <script src="js/social-simulator.js"></script>
 </body>
 </html>
