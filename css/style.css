@@ -830,6 +830,12 @@ button:focus-visible,
   font-size: 1.12rem;
 }
 
+@media (min-width: 700px) {
+  .modal-job-heading .modal-job {
+    white-space: nowrap;
+  }
+}
+
 .modal-meta {
   margin-bottom: 8px;
   color: var(--shl-dunkelblau);
@@ -1380,7 +1386,7 @@ button:focus-visible,
   }
 
   .modal:has(.modal-job-heading) .modal-job-heading {
-    grid-column: 1;
+    grid-column: 1 / -1;
     grid-row: 1;
     align-self: start;
     margin: 0 0 6px;

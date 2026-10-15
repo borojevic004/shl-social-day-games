@@ -113,8 +113,8 @@ body.job-swiper-active .app::after {
 .job-swiper-card {
   position: relative;
   width: min(100%, 390px);
-  height: min(430px, 55dvh);
-  min-height: 310px;
+  height: min(480px, 62dvh);
+  min-height: 350px;
   border-radius: 24px;
   background: var(--shl-weiss);
   box-shadow: 0 14px 34px rgba(38, 47, 94, 0.2);
@@ -140,7 +140,7 @@ body.job-swiper-active .app::after {
 
 .job-swiper-photo {
   position: relative;
-  height: 52%;
+  height: 48%;
   overflow: hidden;
   background: linear-gradient(135deg, var(--shl-hellrot), var(--shl-hellviolett));
 }
@@ -160,11 +160,11 @@ body.job-swiper-active .app::after {
 }
 
 .job-swiper-card-copy {
-  height: 48%;
+  height: 52%;
   padding: 15px 20px 17px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   color: var(--shl-dunkelblau);
 }
 
@@ -497,15 +497,16 @@ body.job-swiper-active .app::after {
 
   .job-swiper-card {
     width: min(100%, 330px);
-    height: min(470px, 61dvh);
+    height: min(520px, 66dvh);
+    min-height: 370px;
   }
 
   .job-swiper-photo {
-    height: 47%;
+    height: 44%;
   }
 
   .job-swiper-card-copy {
-    height: 53%;
+    height: 56%;
   }
 
   .job-swiper-controls {
