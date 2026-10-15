@@ -261,8 +261,7 @@ const SHLMatchmaker = (() => {
             ${imageHtml(job, "match-result-image")}
             <span class="match-result-copy">
               ${index === 0 ? '<span class="match-best-label">Bester Match</span>' : ""}
-              <strong>Bereich: ${job.title}</strong>
-              <small>${job.group}</small>
+              <strong>${job.title}</strong>
             </span>
             <span class="match-score">${job.matchScore}%</span>
           </button>
@@ -323,12 +322,12 @@ const SHLMatchmaker = (() => {
     SHLModal.open(`
       <div class="modal-job-heading">
         <div class="modal-title" id="job-modal-title">${job.matchScore}% Match</div>
-        <div class="modal-job">Bereich: ${job.title}</div>
+        <div class="modal-job">${job.title}</div>
       </div>
       ${imageHtml(job)}
       ${SHLJobFinder.qrHtml(job)}
       <div class="modal-bullets">
-        <p>Das kannst du in diesem Beruf machen:</p>
+        <p>So k&ouml;nnte dein Sozialer Tag aussehen:</p>
         <ul>${tasks}</ul>
       </div>
       <div class="modal-actions">

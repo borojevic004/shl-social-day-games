@@ -42,6 +42,14 @@ const SHLJobDetails = (() => {
   };
 
   function getJobTasks(job, limit = 3) {
+    const customTasks = typeof dayTexts !== "undefined" && Array.isArray(dayTexts[job.id])
+      ? dayTexts[job.id].filter(Boolean)
+      : [];
+
+    if (customTasks.length) {
+      return customTasks.slice(0, limit);
+    }
+
     const tasks = Object.entries(job.weights || {})
       .sort(([, weightA], [, weightB]) => weightB - weightA)
       .map(([attribute]) => taskByAttribute[attribute])

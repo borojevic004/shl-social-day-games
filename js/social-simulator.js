@@ -281,7 +281,6 @@ const SHLSocialSimulator = (() => {
           <button class="simulator-job-card" type="button" data-job-id="${job.id}">
             ${jobImage(job)}
             <strong>${escapeHtml(job.title)}</strong>
-            <small>${escapeHtml(job.group || "Sozialer Tag Job")}</small>
             <span class="simulator-tags">${tagsFor(job)}</span>
           </button>
         `).join("")}
@@ -315,7 +314,7 @@ const SHLSocialSimulator = (() => {
         <div class="simulator-job-mini">
           ${jobImage(selectedJob)}
           <div>
-            <strong>${escapeHtml(selectedJob.group || "Sozialer Tag")}</strong>
+            <strong>${escapeHtml(selectedJob.title)}</strong>
             <span>${escapeHtml(scoreLabel())}</span>
           </div>
         </div>

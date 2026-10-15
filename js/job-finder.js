@@ -267,7 +267,6 @@ const SHLJobFinder = (() => {
       SHLModal.open(`
         <div class="modal-title" id="job-modal-title">Job in deiner Nähe finden</div>
         <div class="modal-job">${job.title}</div>
-        <div class="modal-meta">${job.group}</div>
         <p class="job-finder-intro">
           Klicke auf das gelbe Feld und erlaube die Standortfreigabe. Danach öffnet sich Google Maps mit passenden Orten in deiner Nähe.
         </p>

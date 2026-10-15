@@ -61,15 +61,14 @@ const SHLJobSwiper = (() => {
         <div class="job-swiper-card-stamp job-swiper-stamp-yes">Gefällt mir</div>
       </div>
       <div class="job-swiper-card-copy">
-        <span>${job.group}</span>
         <h2>${displayTitle(job.title)}</h2>
         <div class="job-swiper-tasks">
-          <p>Das kannst du in diesem Beruf machen:</p>
+          <p>So k&ouml;nnte dein Sozialer Tag aussehen:</p>
           <ul>${tasks}</ul>
         </div>
       </div>
     `;
-    els.card.setAttribute("aria-label", `${job.title}. ${job.group}`);
+    els.card.setAttribute("aria-label", job.title);
   }
 
   async function animateTutorialStep(direction, label, runId) {

@@ -1,5 +1,5 @@
 const SHLInactivity = (() => {
-  const TIMEOUT_MS = 40_000;
+  const TIMEOUT_MS = 60_000;
   const ACTIVITY_EVENTS = ["pointerdown", "keydown", "wheel"];
   const PAUSE_SELECTOR = "[data-inactivity-pause]";
   let timeoutId = null;
