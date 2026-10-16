@@ -65,6 +65,12 @@ body {
   gap: 14px;
 }
 
+/* Portrait-only position of the black arrow above the match button. */
+.buzzer-prompt-arrow {
+  left: 26px;
+  top: 34px;
+}
+
 .choice-panel {
   display: flex;
   flex-direction: column;

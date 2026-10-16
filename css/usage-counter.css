@@ -144,7 +144,9 @@
 }
 
 .usage-visit-form button,
-.usage-export {
+.usage-export,
+.usage-backup,
+.usage-import {
   border: 0;
   border-radius: 999px;
   padding: 10px 16px;
@@ -153,6 +155,28 @@
   box-shadow: 0 3px 0 var(--shl-dunkelgelb);
   cursor: pointer;
   font-weight: 900;
+}
+
+.usage-backup-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.usage-backup {
+  background: var(--shl-hellviolett);
+}
+
+.usage-import {
+  background: var(--shl-hellblau);
+}
+
+.usage-import:hover,
+.usage-import:focus-visible,
+.usage-backup:hover,
+.usage-backup:focus-visible {
+  filter: brightness(0.96);
 }
 
 .usage-history {
@@ -266,6 +290,11 @@
   cursor: default;
 }
 
+.usage-backup:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
 .usage-counter-modal.storage-warning .usage-current-visit::after {
   content: "Der Browser blockiert den lokalen Speicher. Bitte die CSV vor dem Schliessen exportieren.";
   margin-top: 5px;
@@ -313,6 +342,11 @@
   .usage-counter-footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .usage-backup-actions {
+    width: 100%;
+    justify-content: flex-start;
   }
 
   .usage-visit-actions {

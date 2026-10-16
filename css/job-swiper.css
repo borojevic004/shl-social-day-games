@@ -497,16 +497,16 @@ body.job-swiper-active .app::after {
 
   .job-swiper-card {
     width: min(100%, 330px);
-    height: min(520px, 66dvh);
-    min-height: 370px;
+    height: min(430px, 58dvh);
+    min-height: 360px;
   }
 
   .job-swiper-photo {
-    height: 44%;
+    height: 48%;
   }
 
   .job-swiper-card-copy {
-    height: 56%;
+    height: 52%;
   }
 
   .job-swiper-controls {
