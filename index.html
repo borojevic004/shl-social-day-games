@@ -7,12 +7,12 @@
   <title>ST-Mobil - Sozialer Tag Matchmaker</title>
   <link rel="icon" href="data:," />
   <link rel="stylesheet" href="css/style.css?v=20261015-3" />
-  <link rel="stylesheet" href="css/portrait.css" media="(orientation: portrait)" />
+  <link rel="stylesheet" href="css/portrait.css?v=20261016-3" media="(orientation: portrait)" />
   <link rel="stylesheet" href="css/landscape.css" media="(orientation: landscape)" />
   <link rel="stylesheet" href="css/home.css" />
-  <link rel="stylesheet" href="css/mode-selection.css" />
-  <link rel="stylesheet" href="css/usage-counter.css" />
-  <link rel="stylesheet" href="css/job-swiper.css?v=20261015-1" />
+  <link rel="stylesheet" href="css/mode-selection.css?v=20261016-4" />
+  <link rel="stylesheet" href="css/usage-counter.css?v=20261016-1" />
+  <link rel="stylesheet" href="css/job-swiper.css?v=20261016-2" />
   <link rel="stylesheet" href="css/geo-quiz.css" />
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
   <link rel="stylesheet" href="css/projects-map.css" />
@@ -51,7 +51,12 @@
 
       <footer class="usage-counter-footer">
         <p>Gespeichert werden nur Schule, Datum und anonyme Z&auml;hler.</p>
-        <button class="usage-export" id="usage-export" type="button">CSV herunterladen</button>
+        <div class="usage-backup-actions">
+          <button class="usage-export" id="usage-export" type="button">CSV herunterladen</button>
+          <button class="usage-backup" id="usage-backup" type="button">Sicherung herunterladen</button>
+          <button class="usage-import" id="usage-import-trigger" type="button">Sicherung importieren</button>
+          <input id="usage-import-file" type="file" accept="application/json,.json" hidden />
+        </div>
       </footer>
     </section>
   </div>
@@ -411,7 +416,7 @@
   <script src="vendor/leaflet/leaflet.js"></script>
   <script src="js/app.js"></script>
   <script src="js/mode-selection.js"></script>
-  <script src="js/usage-counter.js"></script>
+  <script src="js/usage-counter.js?v=20261016-2"></script>
   <script src="js/inactivity.js?v=20261015-4"></script>
   <script src="js/modal.js"></script>
   <script src="js/confetti.js"></script>

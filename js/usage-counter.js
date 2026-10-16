@@ -1,5 +1,6 @@
 const SHLUsageCounter = (() => {
   const STORAGE_KEY = "shl-anonymous-usage-v1";
+  const BACKUP_STORAGE_KEY = "shl-anonymous-usage-backup-v1";
   const DEFAULT_SCHOOL = "Nicht angegeben";
   const GAMES = [
     { id: "matchmaker", label: "Matchmaker" },
@@ -21,7 +22,10 @@ const SHLUsageCounter = (() => {
     form: document.getElementById("usage-visit-form"),
     school: document.getElementById("usage-school-name"),
     history: document.getElementById("usage-history"),
-    export: document.getElementById("usage-export")
+    export: document.getElementById("usage-export"),
+    backup: document.getElementById("usage-backup"),
+    importTrigger: document.getElementById("usage-import-trigger"),
+    import: document.getElementById("usage-import-file")
   };
 
   function emptyCounters() {
@@ -37,26 +41,35 @@ const SHLUsageCounter = (() => {
     return normalized;
   }
 
+  function normalizeData(stored) {
+    if (!stored || !Array.isArray(stored.visits)) throw new Error("No saved usage data");
+    return {
+      activeVisitId: stored.activeVisitId || null,
+      visits: stored.visits.map((visit) => ({
+        id: String(visit.id),
+        school: String(visit.school || DEFAULT_SCHOOL),
+        startedAt: visit.startedAt || new Date().toISOString(),
+        counters: normalizeCounters(visit.counters)
+      }))
+    };
+  }
+
   function loadData() {
-    try {
-      const stored = JSON.parse(window.localStorage.getItem(STORAGE_KEY));
-      if (!stored || !Array.isArray(stored.visits)) throw new Error("No saved usage data");
-      return {
-        activeVisitId: stored.activeVisitId || null,
-        visits: stored.visits.map((visit) => ({
-          id: String(visit.id),
-          school: String(visit.school || DEFAULT_SCHOOL),
-          startedAt: visit.startedAt || new Date().toISOString(),
-          counters: normalizeCounters(visit.counters)
-        }))
-      };
-    } catch {
-      return { activeVisitId: null, visits: [] };
+    for (const key of [STORAGE_KEY, BACKUP_STORAGE_KEY]) {
+      try {
+        const stored = JSON.parse(window.localStorage.getItem(key));
+        return normalizeData(stored);
+      } catch {
+        // Try the rolling backup before starting with an empty history.
+      }
     }
+    return { activeVisitId: null, visits: [] };
   }
 
   function saveData() {
     try {
+      const previous = window.localStorage.getItem(STORAGE_KEY);
+      if (previous) window.localStorage.setItem(BACKUP_STORAGE_KEY, previous);
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
       storageAvailable = true;
     } catch {
@@ -210,6 +223,7 @@ const SHLUsageCounter = (() => {
       : `<p class="usage-empty">Noch keine Nutzung gespeichert.</p>`;
 
     els.export.disabled = visits.length === 0;
+    els.backup.disabled = visits.length === 0;
     els.modal?.classList.toggle("storage-warning", !storageAvailable);
   }
 
@@ -228,6 +242,17 @@ const SHLUsageCounter = (() => {
 
   function csvCell(value) {
     return `"${String(value).replace(/"/g, '""')}"`;
+  }
+
+  function downloadFile(content, type, filename) {
+    const url = URL.createObjectURL(new Blob([content], { type }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   function exportCsv() {
@@ -251,14 +276,40 @@ const SHLUsageCounter = (() => {
       });
 
     const content = `\uFEFF${headers.map(csvCell).join(";")}\n${rows.join("\n")}`;
-    const url = URL.createObjectURL(new Blob([content], { type: "text/csv;charset=utf-8" }));
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `shl-nutzungszahlen-${localDateKey()}.csv`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    downloadFile(content, "text/csv;charset=utf-8", `shl-nutzungszahlen-${localDateKey()}.csv`);
+  }
+
+  function exportBackup() {
+    if (!data.visits.length) return;
+    const content = JSON.stringify({
+      format: "shl-usage-backup",
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      data
+    }, null, 2);
+    downloadFile(content, "application/json;charset=utf-8", `shl-nutzungsbackup-${localDateKey()}.json`);
+  }
+
+  async function importBackup(file) {
+    if (!file) return;
+    try {
+      const parsed = JSON.parse(await file.text());
+      const imported = normalizeData(parsed?.format === "shl-usage-backup" ? parsed.data : parsed);
+      const mergedVisits = new Map(imported.visits.map((visit) => [visit.id, visit]));
+      data.visits.forEach((visit) => mergedVisits.set(visit.id, visit));
+      data.visits = [...mergedVisits.values()];
+
+      if (!activeVisit() && imported.activeVisitId) {
+        data.activeVisitId = imported.activeVisitId;
+      }
+
+      saveData();
+      window.alert(`${imported.visits.length} Schulbesuche wurden aus der Sicherung gelesen.`);
+    } catch {
+      window.alert("Diese Datei ist keine gültige SHL-Sicherung.");
+    } finally {
+      els.import.value = "";
+    }
   }
 
   function init() {
@@ -267,6 +318,9 @@ const SHLUsageCounter = (() => {
     els.close.addEventListener("click", closeModal);
     els.backdrop.addEventListener("click", closeModal);
     els.export.addEventListener("click", exportCsv);
+    els.backup.addEventListener("click", exportBackup);
+    els.importTrigger.addEventListener("click", () => els.import.click());
+    els.import.addEventListener("change", () => importBackup(els.import.files[0]));
     els.history.addEventListener("click", (event) => {
       const deleteButton = event.target.closest("[data-delete-visit]");
       if (deleteButton) deleteVisit(deleteButton.dataset.deleteVisit);
