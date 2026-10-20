@@ -571,25 +571,25 @@ body.home-active .app::after {
   .home-decor-globe {
     top: -16px;
     left: -39px;
-    width: 140px;
+    width: 130px;
   }
 
   .home-decor-megaphone {
     top: 43px;
     right: -30px;
-    width: 100px;
+    width: 110px;
   }
 
   .home-decor-sun {
     top: 32%;
     left: -39px;
-    width: 110px;
+    width: 120px;
   }
 
   .home-decor-calendar {
     left: -32px;
-    bottom: 27%;
-    width: 130px;
+    bottom: 25%;
+    width: 110px;
   }
 
   .home-decor-shl {
@@ -601,7 +601,7 @@ body.home-active .app::after {
   .home-decor-location {
     left: -17px;
     bottom: -22px;
-    width: 111px;
+    width: 125px;
   }
 
   .home-decor-heart {
