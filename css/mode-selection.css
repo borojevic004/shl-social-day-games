@@ -52,6 +52,23 @@
   .mode-selection-content h1 {
     font-size: 1.45rem;
   }
+
+  .home-mode-switch {
+    top: 14px;
+    right: 14px;
+    padding: 7px 10px;
+    font-size: 0.68rem;
+    line-height: 1;
+  }
+}
+
+@media (orientation: portrait) and (max-width: 480px) {
+  .home-mode-switch {
+    top: 10px;
+    right: 10px;
+    padding: 6px 8px;
+    font-size: 0.6rem;
+  }
 }
 
 .mode-selection-content > p {

@@ -477,6 +477,148 @@ body.home-active .app::after {
   }
 }
 
+/* Phone layout: same portrait composition, scaled down proportionally. */
+@media (orientation: portrait) and (max-width: 480px) {
+  body.home-active,
+  body.home-active .app {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .home-screen {
+    min-height: 100svh;
+    padding: 46px 14px 44px;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  .home-screen.screen-active {
+    place-items: start center;
+  }
+
+  .home-content {
+    place-self: start center;
+    width: min(100%, 390px);
+  }
+
+  .home-domain {
+    margin: 0 0 7px;
+    font-size: 0.82rem;
+    line-height: 1.1;
+  }
+
+  .home-claim h1 {
+    font-size: 2.55rem;
+    line-height: 0.98;
+  }
+
+  .home-claim h1 span:last-child {
+    padding-bottom: 7px;
+  }
+
+  .home-claim h1 span:last-child::after {
+    height: 3px;
+  }
+
+  .home-claim p {
+    margin-top: 8px;
+    font-size: 0.8rem;
+    line-height: 1.2;
+  }
+
+  .home-menu {
+    width: 100%;
+    margin-top: 26px;
+    gap: 10px;
+  }
+
+  .home-menu-card {
+    min-height: 80px;
+    padding: 9px 11px;
+    grid-template-columns: 68px minmax(0, 1fr);
+    border-radius: 14px;
+    box-shadow: 0 7px 0 rgba(0, 0, 0, 0.16);
+  }
+
+  .home-menu-icon {
+    height: calc(100% + 18px);
+    margin: -9px 11px -9px -11px;
+  }
+
+  .home-menu-icon svg {
+    width: 40px;
+    max-width: 40px;
+  }
+
+  .home-menu-copy {
+    gap: 4px;
+  }
+
+  .home-menu-copy strong {
+    font-size: 1rem;
+    line-height: 1.08;
+  }
+
+  .home-menu-copy small {
+    font-size: 0.78rem;
+    line-height: 1.15;
+  }
+
+  body[data-app-mode="short"] .home-menu-placeholder {
+    display: none;
+  }
+
+  .home-decor-globe {
+    top: -10px;
+    left: -39px;
+    width: 100px;
+  }
+
+  .home-decor-megaphone {
+    top: 43px;
+    right: -36px;
+    width: 84px;
+  }
+
+  .home-decor-sun {
+    top: 32%;
+    left: -39px;
+    width: 89px;
+  }
+
+  .home-decor-calendar {
+    left: -32px;
+    bottom: 27%;
+    width: 72px;
+  }
+
+  .home-decor-shl {
+    top: 42%;
+    right: -26px;
+    width: 65px;
+  }
+
+  .home-decor-location {
+    left: -17px;
+    bottom: -26px;
+    width: 84px;
+  }
+
+  .home-decor-heart {
+    right: -18px;
+    bottom: -18px;
+    width: 89px;
+  }
+
+  .home-arrow {
+    top: 220px;
+    right: 22%;
+    bottom: auto;
+    width: 50px;
+    transform: rotate(-12deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .home-menu-matchmaker {
     transition: none;
