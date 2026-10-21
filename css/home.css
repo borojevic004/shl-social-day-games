@@ -593,7 +593,7 @@ body.home-active .app::after {
   }
 
   .home-decor-shl {
-    top: 42%;
+    top: 46%;
     right: -20px;
     width: 125px;
   }
@@ -611,8 +611,8 @@ body.home-active .app::after {
   }
 
   .home-arrow {
-    top: 210px;
-    right: 20%;
+    top: 190px;
+    right: 17%;
     bottom: auto;
     width: 50px;
     transform: rotate(-12deg);
