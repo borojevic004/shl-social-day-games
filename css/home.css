@@ -611,7 +611,7 @@ body.home-active .app::after {
   }
 
   .home-arrow {
-    top: 190px;
+    top: 150px;
     right: 17%;
     bottom: auto;
     width: 50px;
