@@ -580,19 +580,19 @@ body.home-active .app::after {
     width: 110px;
   }
 
-  .home-decor-sun {
+  .home-decor-shl {
     top: 32%;
     left: -39px;
     width: 120px;
   }
 
-  .home-decor-calendar {
+  .home-decor-sun {
     left: -32px;
     bottom: 25%;
     width: 110px;
   }
 
-  .home-decor-shl {
+  .home-decor-calendar {
     top: 46%;
     right: -20px;
     width: 125px;
